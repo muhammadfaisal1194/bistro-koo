@@ -7,7 +7,7 @@ import Card from "./Card";
 import SnacksHeader from "./SnacksHeader";
 import DrinkAnimation from "./DrinkAnimation";
 import axios from "axios";
-import { API_URL, IMAGE_URL } from "../../utils/api";
+import { API_URL } from "../../utils/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SnacksAnimation from "./SnacksAnimation";
 
@@ -118,7 +118,7 @@ const Home = () => {
 
   const RenderdComponent = () => {
     if (active === 1) {
-      return <Menu day={day} />;
+      return <Menu day={day} buffets={buffets} />;
     } else if (active === 2 || active === 3) {
       return (
         <>
@@ -160,7 +160,7 @@ const Home = () => {
       <div>
         <RenderdHeader />
       </div>
-      <div className="row">
+      <div className="row" style={{ margin: "0" }}>
         <div className="col-md-2 pt-5">
           <div class="d-flex p-3 col-md-2">
             <div class="nav flex-column ps-1 pe-4 py-4 border border-2 d-sm-flex spacing fs-4 position-fixed">

@@ -7,14 +7,12 @@ const SubCategories = ({
   selectedSubCategories,
   setSelectedType,
 }) => {
-  console.log("selectedSubCategories", selectedSubCategories);
   return (
     <>
       <div className="d-flex spacing">
         {selectedSubCategories.map((cat) => (
           <div
             onClick={() => {
-              console.log("hereeeee");
               setSelectedType(cat._id);
             }}
             class={`tab-drink text-center  ${

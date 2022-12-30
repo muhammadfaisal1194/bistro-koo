@@ -2,7 +2,6 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -24,7 +23,6 @@ const Cart = () => {
   const [buffetPrice, setBuffetPrice] = useState(0);
   const cartItems = useSelector((state) => state.cart.cart);
   const [type, setType] = useState("Serve on table");
-  const [itemCount, setItemCount] = React.useState(1);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,8 +44,9 @@ const Cart = () => {
     }
     localStorage.setItem("amount", JSON.stringify(totalprice + buffet));
     localStorage.setItem("serveType", JSON.stringify(type));
-    console.log(totalprice + buffet);
-    navigate("/checkout");
+    if (cartItems.length > 0) {
+      navigate("/payment");
+    }
   };
 
   const removeItem = (itemID) => {
@@ -161,23 +160,31 @@ const Cart = () => {
           </tbody>
         </table>
         <div className="d-flex py-2 ">
-          <div className="form-check col-4">
+          <div
+            className="form-check col-4"
+            onChange={onChangeValue}
+            style={{ cursor: "pointer" }}
+          >
             <input
               className="form-check-input"
               type="radio"
-              name="Serve"
-              id="Serve"
+              value="Serve on table"
+              checked={type === "Serve on table"}
             />
             <label className="form-check-label" for="Serve">
               Serve on table
             </label>
           </div>
-          <div className="form-check">
+          <div
+            className="form-check"
+            onChange={onChangeValue}
+            style={{ cursor: "pointer" }}
+          >
             <input
               className="form-check-input"
               type="radio"
-              name="Serve"
-              id="Pickup"
+              value="Pickup from the counter"
+              checked={type === "Pickup from the counter"}
             />
             <label className="form-check-label" for="Pickup">
               Pickup from the counter

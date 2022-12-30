@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./../../redux/cart";
+import { IMAGE_URL } from "./../../utils/api";
 
 const Card = ({ item }) => {
   const cart = useSelector((state) => state.cart.cart);
@@ -30,7 +31,7 @@ const Card = ({ item }) => {
     <div className="container d-flex flex-wrap py-4" style={{ width: "41rem" }}>
       <div className="card borderRadious" style={{ width: "13rem" }}>
         <img
-          src="/assets/snack1.jpg"
+          src={`${IMAGE_URL}/${item.thumbnail}`}
           className="card-img-top borderRadious"
           height="110"
           alt="..."
@@ -38,9 +39,9 @@ const Card = ({ item }) => {
         <div className="d-flex justify-content-between  px-3 pt-3">
           <div>
             {item.name}
-            <p className="fs-6 text-secondary">Lemon & sugar</p>
+            {/* <p className="fs-6 text-secondary">Lemon & sugar</p> */}
           </div>
-          <div className="fs-2 fw-bold menu-color">$16</div>
+          <div className=" fs-2 fw-bold menu-color">${item.price}</div>
         </div>
         <button
           className="btn borderRadious"

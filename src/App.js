@@ -17,8 +17,10 @@ import ListMenu from "./pages/ListMenu";
 import Menu from "./pages/Menu";
 import MobileHome from "./pages/Home/MobileHome";
 import MobileDetect from "./pages/Home/MobileDetect";
+import PaymentCheckout from "./pages/PaymentCheckout";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/cart_empty" element={<CartEmpty />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/payment" element={<PaymentCheckout />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="/dashboard/allproducts" element={<ListMenu />} />
               <Route path="/dashboard/addproduct" element={<AddProduct />} />

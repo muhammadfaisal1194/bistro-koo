@@ -11,8 +11,8 @@ const Cart = () => {
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid d-flex justify-content-between ">
-                    <Link  to='/drink'>
-                        <button type="button" className="btn btn-outline-dark">&larr; Back to Drink</button>
+                    <Link  to='/'>
+                        <button type="button" className="btn btn-outline-dark borderRadious">&larr; Back to Drink</button>
                     </Link>
                     <div >
                         <img src="/assets/logo.png" alt="" width="80" height="80" />
@@ -25,7 +25,7 @@ const Cart = () => {
                 </div>
             </nav>
 
-            <div className="container">
+            <div className="">
                 <table className="table border border-2">
                     <thead>
                         <tr>
@@ -59,7 +59,7 @@ const Cart = () => {
                             <td>Lemon with extra soda</td>
                             <td>$ 15</td>
                             <td>1 glass</td>
-                            <td className='d-flex'>
+                            <td className='d-flex '>
                                 <div className='border '>
                                     <FontAwesomeIcon icon={faEdit} />
                                 </div>
@@ -84,12 +84,12 @@ const Cart = () => {
                         </label>
                     </div>
                 </div>
-                <hr />
+                <hr  style={{"border-top": "2px dashed"}}/>
                 <div className="d-flex justify-content-end py-1">
                     <h4>Menu Price $</h4>
                 </div>
                 <div className="d-flex justify-content-center py-1">
-                <button type="button" class="btn btn-success btn-lg ">Proceed to payment</button>
+                <button type="button" class="btn btn-lg borderRadious" style={{"background": "#CC6744" , "color":"white"}}>Proceed to payment</button>
 
                 </div>
 

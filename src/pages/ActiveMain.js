@@ -60,14 +60,16 @@ const ActiveMain = () => {
                     </svg>
                 </div>
 
-                <h3>Special Drinks</h3>
-                <p>Special Beer 10$</p>
-                <p>Special Beer 10$</p>
-                <p>Special Beer 10$</p>
-                <h3>Special Snacks</h3>
-                <p>Special Beer 10$</p>
-                <p>Special Beer 10$</p>
-                <p>Special Beer 10$</p>
+                <div className='menu-color'>
+                    <h4>Special Drinks</h4>
+                    <p>Special Beer  10$</p>
+                    <p>Special Beer 10$</p>
+                    <p>Special Beer 10$</p>
+                    <h4>Special Snacks</h4>
+                    <p>Special Beer 10$</p>
+                    <p>Special Beer 10$</p>
+                    <p>Special Beer 10$</p>
+                </div>
             </div>
         </>
     )

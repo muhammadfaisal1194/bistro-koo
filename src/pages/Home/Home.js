@@ -127,9 +127,7 @@ const Home = () => {
             selectedType={selectedType}
             setSelectedType={setSelectedType}
           />
-          {selectedTypeItems.map((item, index) => (
-            <Card item={item} />
-          ))}
+            <Card item={selectedTypeItems} />
         </>
       );
     }

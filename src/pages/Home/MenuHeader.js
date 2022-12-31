@@ -63,6 +63,34 @@ const MenuHeader = () => {
       className="navbar navbar-expand-lg navbar-light bg-light  nave-bar "
       style={{ background: "transparent !important" }}
     >
+      <div>
+      {token && (
+              <ul className="navbar-nav ml-5">
+                <li
+                  className={`nav-item ${pathname === "/dashboard" ? "active" : ""
+                    }`}
+                >
+                  <Link
+                    className="nav-link login"
+                    to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link login"
+                    to="/"
+                    onClick={() => {
+                      logoutHandler();
+                    }}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            )}
+      </div>
       <div className="container-fluid d-flex justify-content-end">
         <div className="border border-1 p-1 position-relative">
           <FontAwesomeIcon

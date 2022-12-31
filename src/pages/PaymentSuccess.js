@@ -14,10 +14,10 @@ const PaymentSuccess = () => {
             type="button"
             className="btn btn-outline-dark borderRadious"
             onClick={() => {
-              navigate("/cart");
+              navigate("/");
             }}
           >
-            &larr; Back to Cart
+            &larr; Back to Drink
           </button>
           <div>
             <img src="/assets/logo.png" alt="" width="80" height="80" />

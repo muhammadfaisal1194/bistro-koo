@@ -34,7 +34,7 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify(response.data.user));
           localStorage.setItem("role", JSON.stringify(response.data.user.role));
           if (response.data.user.role == 1) {
-            navigate("/dashboard")
+            navigate("/dashboard/allmenus")
           } else {
             navigate("/dashboard/chat")
           }

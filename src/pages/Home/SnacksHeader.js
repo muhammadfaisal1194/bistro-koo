@@ -61,7 +61,34 @@ const SnacksHeader = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light nave-bar">
       <div className="container-fluid d-flex">
-        <div className="jus"></div>
+        <div>
+          {token && (
+            <ul className="navbar-nav ml-5">
+              <li
+                className={`nav-item ${pathname === "/dashboard" ? "active" : ""
+                  }`}
+              >
+                <Link
+                  className="nav-link login"
+                  to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link login"
+                  to="/"
+                  onClick={() => {
+                    logoutHandler();
+                  }}
+                >
+                  Logout
+                </Link>
+              </li>
+            </ul>
+          )}
+        </div>
         <Link>
           <img src="/assets/logo.png" alt="" width="80" height="80" />
         </Link>

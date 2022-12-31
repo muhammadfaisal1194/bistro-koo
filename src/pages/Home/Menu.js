@@ -134,7 +134,7 @@ const Menu = ({ day, buffets }) => {
         </svg>
       </div>
 
-      <div className="menu-color mt-3 " style={{ width: "30rem" }}>
+      <div className="menu-color mt-3 " style={{ width: "25rem" }}>
         {/* <h5 className='spacing'>Special Drinks</h5>
                 <p><span>Special Beer</span> <span className='linebetween'>10$</span></p>
                 <p><span>Lava Cocktails</span> <span className='linebetween'>10$</span></p>

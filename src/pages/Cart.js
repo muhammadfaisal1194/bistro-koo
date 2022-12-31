@@ -84,7 +84,11 @@ const Cart = () => {
             </button>
           </Link>
           <div>
-            <img src="/assets/logo.png" alt="" width="80" height="80" />
+            <img src="/assets/logo.png" alt="" width="80" height="80"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate("/");
+              }} />
           </div>
 
           <div className="border border-1">

@@ -120,7 +120,10 @@ const CheckoutForm = () => {
         <form onSubmit={handleSubmit}>
           <div className="row" style={{ marginTop: 75 }}>
             <div className="col-md-12 mb-3">
+              <div className="d-flex justify-content-between align-items-center"> 
               <label htmlFor="cc-number">Card Number</label>
+              <img style={{width:"55%"}} src="/assets/card.png" alt="" />
+              </div>
               <CardNumberElement
                 id="cc-number"
                 className="form-control"

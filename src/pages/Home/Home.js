@@ -10,8 +10,12 @@ import axios from "axios";
 import { API_URL } from "../../utils/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SnacksAnimation from "./SnacksAnimation";
+import { useDispatch, useSelector } from "react-redux";
+import { setBgColor } from "../../redux/layout";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const state = useSelector(state=> state.layout)
   const [active, setActive] = useState(1);
   const [subDrinks, setSubDrinks] = useState(false);
   const [subSnacks, setSubSnacks] = useState(false);
@@ -70,7 +74,6 @@ const Home = () => {
           setFreeItem(responseMenu.data.data.freeItem);
           setDrinks(drs);
           setSnacks(sns);
-          // console.log(drs, "drrrrrrrrrr")
         }
       }
     }
@@ -127,19 +130,21 @@ const Home = () => {
             selectedType={selectedType}
             setSelectedType={setSelectedType}
           />
-            <Card item={selectedTypeItems} />
+          <Card item={selectedTypeItems} />
         </>
       );
     }
   };
 
+
+
   const RenderdHeader = () => {
     if (active === 1) {
       return <MenuHeader />;
     } else if (active === 2) {
-      return <DrinkHeader />;
+      return <DrinkHeader bgColor={state.bgColor} />;
     } else if (active === 3) {
-      return <SnacksHeader />;
+      return <SnacksHeader bgColor={state.bgColor} />;
     }
   };
 
@@ -158,47 +163,47 @@ const Home = () => {
       <div>
         <RenderdHeader />
       </div>
-      <div className="row" style={{ margin: "0" }}>
+      <div class="row" style={{ margin: "0", background: state.bgColor }}>
         <div className="col-md-2 pt-5">
           <div class="d-flex p-3 col-md-2">
             <div class="nav flex-column ps-1 pe-4 py-4 border border-2 d-sm-flex spacing fs-4 position-fixed">
               <div
                 onClick={() => {
+                  dispatch(setBgColor("white"))
                   setActive(1);
                   setSubDrinks(false);
                   setSubSnacks(false);
                 }}
-                class={`tab-menu py-2 px-4 ${
-                  active === 1 ? "tab-menu-active" : ""
-                }`}
+                class={`tab-menu py-2 px-4 ${active === 1 ? "tab-menu-active" : ""
+                  }`}
               >
                 Menu
               </div>
               <div
                 onClick={() => {
+                  dispatch(setBgColor("#DDE2E5"))
                   setActive(2);
                   setSubDrinks(true);
                   setSubSnacks(false);
                   setSelectedType(drinksCats[0]._id);
                   setSelectedSubCategories(drinksCats);
                 }}
-                class={`tab-menu py-2 px-4 ${
-                  active === 2 ? "tab-menu-active" : ""
-                }`}
+                class={`tab-menu py-2 px-4 ${active === 2 ? "tab-menu-active" : ""
+                  }`}
               >
                 Drinks
               </div>
               <div
                 onClick={() => {
+                  dispatch(setBgColor("#F0D1C6"))
                   setActive(3);
                   setSubDrinks(false);
                   setSubSnacks(true);
                   setSelectedType(snacksCats[0]._id);
                   setSelectedSubCategories(snacksCats);
                 }}
-                class={`tab-menu py-2 px-4 ${
-                  active === 3 ? "tab-menu-active" : ""
-                }`}
+                class={`tab-menu py-2 px-4 ${active === 3 ? "tab-menu-active" : ""
+                  }`}
               >
                 Snacks
               </div>

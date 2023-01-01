@@ -8,7 +8,7 @@ import axios from "axios";
 import { API_URL, API_URL_SOCKET } from "../../utils/api";
 import { io } from "socket.io-client";
 
-const DrinkHeader = () => {
+const DrinkHeader = ({ bgColor }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [notifications, setNotifications] = useState([]);
@@ -58,9 +58,8 @@ const DrinkHeader = () => {
     setCount(c);
   }, [cart]);
 
-
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light nave-bar">
+    <nav className="navbar navbar-expand-lg navbar-light  nave-bar opacity" style={{background: bgColor}}>
       <div className="container-fluid d-flex justify-content-between ">
         <div>
           {token && (

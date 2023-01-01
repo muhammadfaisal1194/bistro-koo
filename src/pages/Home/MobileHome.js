@@ -8,8 +8,13 @@ import MobileCard from "./MobileCard";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setBgColor } from "../../redux/layout";
+
 
 const MobileHome = () => {
+  const dispatch = useDispatch();
+  const state = useSelector(state=> state.layout)
   const [active, setActive] = useState(1);
   const [subDrinks, setSubDrinks] = useState(false);
   const [subSnacks, setSubSnacks] = useState(false);
@@ -132,13 +137,13 @@ const MobileHome = () => {
     }
   };
 
-  const RenderdHeader = () => {
+   const RenderdHeader = () => {
     if (active === 1) {
       return <MenuHeader />;
     } else if (active === 2) {
-      return <DrinkHeader />;
+      return <DrinkHeader bgColor={state.bgColor}/>;
     } else if (active === 3) {
-      return <SnacksHeader />;
+      return <SnacksHeader bgColor={state.bgColor}/>;
     }
   };
 
@@ -147,9 +152,10 @@ const MobileHome = () => {
       <div>
         <RenderdHeader />
       </div>
-      <div className="d-flex justify-content-around">
+      <div className="d-flex justify-content-around" style={{ background: state.bgColor }}>
         <div
           onClick={() => {
+            dispatch (setBgColor("white"))
             setActive(1);
             setSubDrinks(false);
             setSubSnacks(false);
@@ -160,6 +166,7 @@ const MobileHome = () => {
         </div>
         <div
           onClick={() => {
+            dispatch(setBgColor('#DDE2E5'))
             setActive(2);
             setSubDrinks(true);
             setSubSnacks(false);
@@ -172,6 +179,7 @@ const MobileHome = () => {
         </div>
         <div
           onClick={() => {
+            dispatch(setBgColor('#F0D1C6'))
             setActive(3);
             setSubDrinks(false);
             setSubSnacks(true);
@@ -183,7 +191,7 @@ const MobileHome = () => {
           Snacks
         </div>
       </div>
-      <div className="mt-2 d-flex justify-content-center">
+      <div className="pt-2 d-flex justify-content-center" style={{background: state.bgColor }}>
         <RenderdComponent />
       </div>
     </>

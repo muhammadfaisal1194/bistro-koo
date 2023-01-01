@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
+  const state=useSelector(state=>state.layout)
   return (
-    <>
+    <div style={{ background:state.bgColor }}>
       <div
         className="row border-top border-bottom py-4 px-4"
         style={{ margin: "0" }}
@@ -123,7 +125,7 @@ const Footer = () => {
       <div className=" px-4 py-1">
         All Rights Reserved. © 2022 Bistro Koo Visukoonti
       </div>
-    </>
+    </div>
   );
 };
 

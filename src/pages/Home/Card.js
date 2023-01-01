@@ -30,7 +30,7 @@ const Card = ({ item }) => {
   return (
     <div className="container d-flex flex-wrap py-4" style={{ width: "41rem" }}>
       {item.map((item, index) => (
-        <div className="card borderRadious" style={{ width: "13rem" }}>
+        <div className="card borderRadious" style={{ width: "13rem" ,background: "transparent"}}>
           <img
             src={`${IMAGE_URL}/${item.thumbnail}`}
             className="card-img-top borderRadious"

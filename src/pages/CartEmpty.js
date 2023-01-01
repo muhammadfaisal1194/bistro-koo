@@ -27,8 +27,7 @@ const CartEmpty = () => {
             </nav>
             <div className="container text-center  ">
                 <div className=" py-5  ">
-
-                    <FontAwesomeIcon icon={faCartPlus} style={{ "height": "270px" }} />
+                <img src="/assets/empty_cart.png" alt="" style={{width:"30%"}} />
                 </div>
                 <h6 className='footer-heading-colo'>Your cart is empty!</h6>
                 <p className='footer-subheading-text'>Looks like you haven't added anything to your cart. Go ahead & explore some items.</p>

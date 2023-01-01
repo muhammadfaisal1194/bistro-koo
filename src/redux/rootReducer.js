@@ -1,8 +1,10 @@
 // ** Reducers Imports
 import cart from "./cart"
+import layout from "./layout"
 
 const rootReducer = {
-  cart
+  cart,
+  layout
 }
 
 export default rootReducer

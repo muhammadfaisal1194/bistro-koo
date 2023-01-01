@@ -1,7 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -27,7 +25,7 @@ const PaymentSuccess = () => {
       </nav>
       <div className="container text-center">
         <div className=" py-5  ">
-          <FontAwesomeIcon icon={faCreditCard} style={{ height: "270px" }} />
+        <img src="/assets/pay.png" alt="" style={{width:"30%"}} />
         </div>
         <h6 className="footer-heading-colo">Thank You!</h6>
         <p className="footer-subheading-text">Payment done successfully</p>

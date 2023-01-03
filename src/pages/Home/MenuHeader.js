@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_URL, API_URL_SOCKET } from "../../utils/api";
 import { io } from "socket.io-client";
+import { setBgColor } from "../../redux/layout";
 
 const MenuHeader = () => {
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [notifications, setNotifications] = useState([]);
   const isMobile = window.innerWidth <= 500;
   const [count, setCount] = useState(0);
-  const cart = useSelector((state) => state.cart.cart);
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("accessToken");
   let table = JSON.parse(localStorage.getItem("table"));
@@ -59,44 +61,51 @@ const MenuHeader = () => {
   }, [cart]);
 
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-light bg-light  nave-bar "
-      style={{ background: "transparent !important" }}
-    >
-      <div>
-      {token && (
-              <ul className="navbar-nav ml-5">
-                <li
-                  className={`nav-item ${pathname === "/dashboard" ? "active" : ""
-                    }`}
+    <nav className="navbar navbar-expand-lg navbar-light  nave-bar opacity" >
+      <div className="container-fluid d-flex justify-content-between ">
+        <div>
+          {token && (
+            <ul className="navbar-nav ml-5">
+              <li
+                className={`nav-item ${pathname === "/dashboard" ? "active" : ""
+                  }`}
+              >
+                <Link
+                  className="nav-link login"
+                  to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
+                  onClick={() => dispatch(setBgColor("white"))}
                 >
-                  <Link
-                    className="nav-link login"
-                    to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link login"
-                    to="/"
-                    onClick={() => {
-                      logoutHandler();
-                    }}
-                  >
-                    Logout
-                  </Link>
-                </li>
-              </ul>
-            )}
-      </div>
-      <div className="container-fluid d-flex justify-content-end">
+                  Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link login"
+                  to="/"
+                  onClick={() => {
+                    logoutHandler();
+                  }}
+                >
+                  Logout
+                </Link>
+              </li>
+            </ul>
+          )}
+        </div>
+        <div>
+          <Link to="/">
+            <img src="/assets/logo.png" alt="" width="80" height="80" />
+          </Link>
+        </div>
+
         <div className="border border-1 p-1 position-relative">
           <FontAwesomeIcon
             icon={faShoppingBasket}
             style={{ cursor: "pointer", height: 34 }}
-            onClick={() => navigate("/cart")}
+            onClick={() => {
+              navigate("/cart");
+              dispatch(setBgColor("white"));
+            }}
           />
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
             {count}

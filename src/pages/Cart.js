@@ -23,9 +23,9 @@ const Cart = () => {
   const [buffetPrice, setBuffetPrice] = useState(0);
   const cartItems = useSelector((state) => state.cart.cart);
   const [type, setType] = useState("Serve on table");
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [totalPrice, setTotalPrice] = useState(0)
 
   const fetchBuffetPrice = async () => {
     const response = await axios.get(`${API_URL}/buffet/index`);
@@ -70,6 +70,14 @@ const Cart = () => {
     fetchBuffetPrice();
     setCarItem(cartItems);
   }, []);
+
+  useEffect(() => {
+    let price = 0;
+    cartItems.map((item) => {
+      price = price + (item.price)
+    })
+    setTotalPrice(price)
+  }, [cartitem]);
 
   return (
     <>
@@ -130,7 +138,7 @@ const Cart = () => {
                 </th>
                 <td>{item.name}</td>
                 <td>{item.description}</td>
-                <td>${item.price}</td>
+                <td>{item.price}</td>
                 <td>
                   <Button
                     onClick={() => {
@@ -197,7 +205,7 @@ const Cart = () => {
         </div>
         <hr style={{ "border-top": "2px dashed" }} />
         <div className="d-flex justify-content-end py-1">
-          <h4>Menu Price $</h4>
+          <h4>Menu Price {totalPrice} $</h4>
         </div>
         <div className="d-flex justify-content-center py-1">
           <button

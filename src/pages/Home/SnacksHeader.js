@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_URL, API_URL_SOCKET } from "../../utils/api";
 import { io } from "socket.io-client";
+import { setBgColor } from "../../redux/layout";
 
-const SnacksHeader = ({bgColor}) => {
+const SnacksHeader = ({ bgColor }) => {
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [notifications, setNotifications] = useState([]);
   const isMobile = window.innerWidth <= 500;
   const [count, setCount] = useState(0);
-  const cart = useSelector((state) => state.cart.cart);
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("accessToken");
   let table = JSON.parse(localStorage.getItem("table"));
@@ -59,7 +61,7 @@ const SnacksHeader = ({bgColor}) => {
   }, [cart]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light  nave-bar opacity" style={{background: bgColor}}>
+    <nav className="navbar navbar-expand-lg navbar-light  nave-bar opacity" style={{ background: bgColor }}>
       <div className="container-fluid d-flex">
         <div>
           {token && (
@@ -71,6 +73,7 @@ const SnacksHeader = ({bgColor}) => {
                 <Link
                   className="nav-link login"
                   to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
+                  onClick={() => dispatch(setBgColor("white"))}
                 >
                   Dashboard
                 </Link>
@@ -96,7 +99,11 @@ const SnacksHeader = ({bgColor}) => {
           <FontAwesomeIcon
             icon={faShoppingBasket}
             style={{ cursor: "pointer", height: 34 }}
-            onClick={() => navigate("/cart")}
+            onClick={() => {
+              navigate("/cart")
+              dispatch(setBgColor("white"))
+            }}
+           
           />
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
             {count}

@@ -121,7 +121,7 @@ const Home = () => {
 
   const RenderdComponent = () => {
     if (active === 1) {
-      return <Menu day={day} buffets={buffets} />;
+      return <Menu day={day} buffets={buffets} buffetPrice ={buffetPrice} />;
     } else if (active === 2 || active === 3) {
       return (
         <>

@@ -166,7 +166,7 @@ const Home = () => {
       <div class="row" style={{ margin: "0", background: state.bgColor }}>
         <div className="col-md-2 pt-5">
           <div class="d-flex p-3 col-md-2">
-            <div class="nav flex-column ps-1 pe-4 py-4 border border-2 d-sm-flex spacing fs-4 position-fixed">
+            <div class="nav flex-column ps-1 pe-4 py-4 menu-border d-sm-flex spacing fs-4 position-fixed">
               <div
                 onClick={() => {
                   dispatch(setBgColor("white"))

@@ -92,7 +92,7 @@ const MenuHeader = () => {
             </ul>
           )}
         </div>
-        <div>
+        <div className="fadeIn">
           <Link to="/">
             <img src="/assets/logo.png" alt="" width="80" height="80" />
           </Link>

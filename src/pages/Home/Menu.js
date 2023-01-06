@@ -35,7 +35,7 @@ const Menu = ({ day, buffets, buffetPrice }) => {
 
 
   return (
-    <div className="fadeInUp">
+    <div className="fadeInUp mt-5">
       <div className="text-center d-flex flex-column align-items-center">
         {/* <img className="fadeOut" src="/assets/logo.png" alt="" width="100" height="100" /> */}
         <h1 className="heading-color fw-bold menu-spacing">It's {day}</h1>
@@ -213,7 +213,7 @@ const Menu = ({ day, buffets, buffetPrice }) => {
           </label>
         </div>
       </div>
-      <div className="d-flex flex-column align-items-end py-3">
+      <div className="d-flex flex-column align-items-end pe-3">
         <h4>Menu Price {buffetPrice}$</h4>
         <button
           type="button"

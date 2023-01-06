@@ -1,7 +1,6 @@
 // ** Redux Imports
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const layoutSlice = createSlice({
   name: "layout",
   initialState: {

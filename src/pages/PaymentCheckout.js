@@ -98,7 +98,7 @@ const CheckoutForm = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light nave-bar">
         <div className="container-fluid d-flex ">
           <button
             type="button"

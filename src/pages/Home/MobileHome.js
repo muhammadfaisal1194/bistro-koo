@@ -155,7 +155,7 @@ const MobileHome = () => {
       <div className="d-flex justify-content-around" style={{ background: state.bgColor }}>
         <div
           onClick={() => {
-            dispatch (setBgColor("white"))
+            dispatch (setBgColor("rgba(255, 255, 255,0.5)"))
             setActive(1);
             setSubDrinks(false);
             setSubSnacks(false);
@@ -166,7 +166,7 @@ const MobileHome = () => {
         </div>
         <div
           onClick={() => {
-            dispatch(setBgColor('#DDE2E5'))
+            dispatch(setBgColor('rgba(143, 158, 169,0.5)'))
             setActive(2);
             setSubDrinks(true);
             setSubSnacks(false);
@@ -179,7 +179,7 @@ const MobileHome = () => {
         </div>
         <div
           onClick={() => {
-            dispatch(setBgColor('#F0D1C6'))
+            dispatch(setBgColor('rgba(204, 103, 68,0.5)'))
             setActive(3);
             setSubDrinks(false);
             setSubSnacks(true);

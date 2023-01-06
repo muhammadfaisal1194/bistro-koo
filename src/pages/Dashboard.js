@@ -83,7 +83,7 @@ const Dashboard = () => {
   return (
     <>
 
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light nave-bar opacity">
         <div className="container-fluid d-flex justify-content-between ">
           <div>
             {token && (

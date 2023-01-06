@@ -61,7 +61,8 @@ const MenuHeader = () => {
   }, [cart]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light  nave-bar opacity" >
+
+    <nav className="navbar navbar-expand-lg navbar-light nave-bar opacity" >
       <div className="container-fluid d-flex justify-content-between ">
         <div>
           {token && (
@@ -73,7 +74,7 @@ const MenuHeader = () => {
                 <Link
                   className="nav-link login"
                   to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
-                  onClick={() => dispatch(setBgColor("white"))}
+                  onClick={() => dispatch(setBgColor("rgba(255, 255, 255,0.5)"))}
                 >
                   Dashboard
                 </Link>
@@ -104,7 +105,7 @@ const MenuHeader = () => {
             style={{ cursor: "pointer", height: 34 }}
             onClick={() => {
               navigate("/cart");
-              dispatch(setBgColor("white"));
+              dispatch(setBgColor("rgba(255, 255, 255,0.5)"));
             }}
           />
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">

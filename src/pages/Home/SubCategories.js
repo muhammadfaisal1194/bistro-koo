@@ -9,22 +9,23 @@ const SubCategories = ({
 }) => {
   return (
     <>
-      <div className="d-flex spacing">
-        {selectedSubCategories.map((cat) => (
-          <div
-            onClick={() => {
-              setSelectedType(cat._id);
-            }}
-            class={`tab-drink text-center  ${
-              selectedType === cat._id ? "tab-drink-active" : ""
-            }`}
-          >
-            <div>
-              <FontAwesomeIcon icon={faWineBottle} />
+      <div className="container d-flex flex-wrap py-4" style={{ width: "39.2rem" , overflowX:"overlay" }}>
+        <div className="d-flex spacing">
+          {selectedSubCategories.map((cat) => (
+            <div
+              onClick={() => {
+                setSelectedType(cat._id);
+              }}
+              class={`tab-drink text-center  ${selectedType === cat._id ? "tab-drink-active" : ""
+                }`}
+            >
+              <div>
+                <FontAwesomeIcon icon={faWineBottle} />
+              </div>
+              <div>{cat.name}</div>
             </div>
-            <div>{cat.name}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );

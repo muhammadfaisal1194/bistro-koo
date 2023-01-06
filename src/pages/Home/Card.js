@@ -28,9 +28,9 @@ const Card = ({ item }) => {
   };
 
   return (
-    <div className="container d-flex flex-wrap py-4" style={{ width: "41rem" }}>
+    <div className="container d-flex flex-wrap py-4  card-fadein " style={{ width: "41rem" , paddingLeft:"20px"}}>
       {item.map((item, index) => (
-        <div className="card borderRadious" style={{ width: "13rem" ,background: "transparent"}}>
+        <div className="card borderRadious m-2" style={{ width: "12rem" ,background: "transparent"}}>
           <img
             src={`${IMAGE_URL}/${item.thumbnail}`}
             className="card-img-top borderRadious"

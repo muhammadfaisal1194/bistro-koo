@@ -21,11 +21,13 @@ import PaymentCheckout from "./pages/PaymentCheckout";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import Background from "./pages/Background";
 
 function App() {
   return (
     <>
       <Provider store={store}>
+        <Background />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MobileDetect />} />

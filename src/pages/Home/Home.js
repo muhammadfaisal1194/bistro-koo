@@ -15,7 +15,7 @@ import { setBgColor } from "../../redux/layout";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const state = useSelector(state=> state.layout)
+  const state = useSelector(state => state.layout)
   const [active, setActive] = useState(1);
   const [subDrinks, setSubDrinks] = useState(false);
   const [subSnacks, setSubSnacks] = useState(false);
@@ -121,7 +121,7 @@ const Home = () => {
 
   const RenderdComponent = () => {
     if (active === 1) {
-      return <Menu day={day} buffets={buffets} buffetPrice ={buffetPrice} />;
+      return <Menu day={day} buffets={buffets} buffetPrice={buffetPrice} />;
     } else if (active === 2 || active === 3) {
       return (
         <>
@@ -166,10 +166,10 @@ const Home = () => {
       <div class="row" style={{ margin: "0", background: state.bgColor }}>
         <div className="col-md-2 pt-5">
           <div class="d-flex p-3 col-md-2">
-            <div class="nav flex-column ps-1 pe-4 py-4 menu-border d-sm-flex spacing fs-4 position-fixed">
+            <div class="nav flex-column ps-1 pe-4 py-4 menu-border spacing fs-4 position-fixed">
               <div
                 onClick={() => {
-                  dispatch(setBgColor("white"))
+                  dispatch(setBgColor("rgba(255, 255, 255,0.5)"))
                   setActive(1);
                   setSubDrinks(false);
                   setSubSnacks(false);
@@ -181,7 +181,7 @@ const Home = () => {
               </div>
               <div
                 onClick={() => {
-                  dispatch(setBgColor("#DDE2E5"))
+                  dispatch(setBgColor("rgba(143, 158, 169,0.5)"))
                   setActive(2);
                   setSubDrinks(true);
                   setSubSnacks(false);
@@ -195,7 +195,7 @@ const Home = () => {
               </div>
               <div
                 onClick={() => {
-                  dispatch(setBgColor("#F0D1C6"))
+                  dispatch(setBgColor("rgba(204, 103, 68,0.5)"))
                   setActive(3);
                   setSubDrinks(false);
                   setSubSnacks(true);

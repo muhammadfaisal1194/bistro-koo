@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const layoutSlice = createSlice({
   name: "layout",
   initialState: {
-    bgColor: "white",
+    bgColor: "rgba(255, 255, 255,0.5)",
   },
   reducers: {
     setBgColor: (state, action) => {

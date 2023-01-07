@@ -163,9 +163,9 @@ const Home = () => {
       <div>
         <RenderdHeader />
       </div>
-      <div class="row" style={{ margin: "0", background: state.bgColor }}>
+      <div className="row" style={{ margin: "0", background: state.bgColor }}>
         <div className="col-md-2 pt-5">
-          <div class="nav flex-column ps-1 pe-4 py-4 menu-border spacing fs-4 position-fixed">
+          <div className="nav flex-column ps-1 pe-4 py-4 menu-border spacing fs-4 position-fixed">
             <div style={{width:"147px" , marginRight:"10px"}}>
               <div
                 onClick={() => {
@@ -174,7 +174,7 @@ const Home = () => {
                   setSubDrinks(false);
                   setSubSnacks(false);
                 }}
-                class={`tab-menu py-2 px-4 ${active === 1 ? "tab-menu-active" : ""
+                className={`tab-menu py-2 px-4 ${active === 1 ? "tab-menu-active" : ""
                   }`}
               >
                 Menu
@@ -188,7 +188,7 @@ const Home = () => {
                   setSelectedType(drinksCats[0]._id);
                   setSelectedSubCategories(drinksCats);
                 }}
-                class={`tab-menu py-2 px-4 ${active === 2 ? "tab-menu-active" : ""
+                className={`tab-menu py-2 px-4 ${active === 2 ? "tab-menu-active" : ""
                   }`}
               >
                 Drinks
@@ -202,7 +202,7 @@ const Home = () => {
                   setSelectedType(snacksCats[0]._id);
                   setSelectedSubCategories(snacksCats);
                 }}
-                class={`tab-menu py-2 px-4 ${active === 3 ? "tab-menu-active" : ""
+                className={`tab-menu py-2 px-4 ${active === 3 ? "tab-menu-active" : ""
                   }`}
               >
                 Snacks

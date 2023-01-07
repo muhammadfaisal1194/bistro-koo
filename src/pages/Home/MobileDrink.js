@@ -17,7 +17,7 @@ const MobileDrink = ({
             onClick={() => {
               setSelectedType(cat._id);
             }}
-            class={`tab-drink text-center  ${selectedType === cat._id ? "tab-drink-active" : ""
+            className={`tab-drink text-center  ${selectedType === cat._id ? "tab-drink-active" : ""
               }`}
           >
             <div>

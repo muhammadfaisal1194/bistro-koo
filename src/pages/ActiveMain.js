@@ -15,7 +15,7 @@ const ActiveMain = () => {
                     </div>
 
                     <div>
-                        <i class="fa-solid fa-coffee fa-lg"></i>
+                        <i className="fa-solid fa-coffee fa-lg"></i>
                         <FontAwesomeIcon icon={faShoppingBasket} />
                     </div>
 

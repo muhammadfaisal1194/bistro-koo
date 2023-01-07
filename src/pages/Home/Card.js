@@ -32,7 +32,7 @@ const Card = ({ item }) => {
       {item.map((item, index) => (
         <div
           className="card borderRadious m-2"
-          style={{ width: "12rem", background: "transparent" }}
+          style={{ width: "11rem", background: "transparent" }}
         >
           <img
             src={`${IMAGE_URL}/${item.thumbnail}`}

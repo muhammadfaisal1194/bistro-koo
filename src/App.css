@@ -156,7 +156,7 @@
 
 /* menu tab  */
 .menu-border {
-  border: 1px solid #162e4d;
+  border: 1.5px solid #162e4d;
 }
 
 .tab-menu {
@@ -319,6 +319,19 @@
     opacity: 1;
   }
 }
+.fadeOut {
+  animation: fadeOut 1s ease-in-out;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
 
 .card-fadein {
   animation: card-fadein 0.5s ease-in-out;
@@ -356,9 +369,6 @@
   border-bottom: 1px solid #162e4d;
 }
 
-body {
-  font-family: "Poppins", sans-serif;
-}
 
 .borderRadious {
   border-radius: 0px !important;

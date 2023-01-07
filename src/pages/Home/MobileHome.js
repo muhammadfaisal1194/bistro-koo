@@ -160,7 +160,7 @@ const MobileHome = () => {
             setSubDrinks(false);
             setSubSnacks(false);
           }}
-          class={`tab-menu py-2 px-4 ${active === 1 ? "tab-menu-active" : ""}`}
+          className={`tab-menu py-2 px-4 ${active === 1 ? "tab-menu-active" : ""}`}
         >
           Menu
         </div>
@@ -173,7 +173,7 @@ const MobileHome = () => {
             setSelectedType(drinksCats[0]._id);
             setSelectedSubCategories(drinksCats);
           }}
-          class={`tab-menu py-2 px-4 ${active === 2 ? "tab-menu-active" : ""}`}
+          className={`tab-menu py-2 px-4 ${active === 2 ? "tab-menu-active" : ""}`}
         >
           Drinks
         </div>
@@ -186,7 +186,7 @@ const MobileHome = () => {
             setSelectedType(snacksCats[0]._id);
             setSelectedSubCategories(snacksCats);
           }}
-          class={`tab-menu py-2 px-4 ${active === 3 ? "tab-menu-active" : ""}`}
+          className={`tab-menu py-2 px-4 ${active === 3 ? "tab-menu-active" : ""}`}
         >
           Snacks
         </div>

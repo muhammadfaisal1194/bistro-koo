@@ -38,17 +38,17 @@ const SubCategories = ({
       keyBoardControl={true}
       customTransition="all .5"
       transitionDuration={500}
-      containerClass="carousel-container"
+      containerclassName="carousel-container"
       removeArrowOnDeviceType={["tablet", "mobile"]}
-      dotListClass="custom-dot-list-style"
-      itemClass="carousel-item-padding-40-px"
+      dotListclassName="custom-dot-list-style"
+      itemclassName="carousel-item-padding-40-px"
     >
       {selectedSubCategories.map((cat) => (
         <div
           onClick={() => {
             setSelectedType(cat._id);
           }}
-          class={`tab-drink text-center  ${
+          className={`tab-drink text-center  ${
             selectedType === cat._id ? "tab-drink-active" : ""
           }`}
         >

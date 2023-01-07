@@ -28,7 +28,10 @@ const Card = ({ item }) => {
   };
 
   return (
-    <div className="container d-flex flex-wrap py-4  card-fadein">
+    <div
+      className="container d-flex flex-wrap py-4  card-fadein"
+      style={{ minHeight: "18rem" }}
+    >
       {item.map((item, index) => (
         <div
           className="card borderRadious m-2"

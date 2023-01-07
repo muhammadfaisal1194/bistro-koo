@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, CircularProgress } from "@mui/material";
 import { API_URL } from "../utils/api";
-import { API_URL_SOCKET } from "../utils/api";
-import { io } from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Container } from "@mui/system";
+import { SocketContext } from "../context/socket";
 
 const Kitchen = () => {
+  const { socket } = useContext(SocketContext);
   const [notificationText, setNotificationText] = useState("");
-
-  const socket = io(API_URL_SOCKET);
+  const [loading, setLoading] = useState(false);
 
   const notifyHandler = () => {
     socket.emit("sendNotification", {
@@ -23,6 +22,11 @@ const Kitchen = () => {
 
   const postNotificationHandler = async () => {
     try {
+      if (!notificationText) {
+        toast.error("Please type something!");
+        return;
+      }
+      setLoading(true);
       const response = await axios.post(`${API_URL}/notification/create`, {
         notificationText: notificationText,
       });
@@ -34,6 +38,8 @@ const Kitchen = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,20 +52,36 @@ const Kitchen = () => {
         label="Notification"
         name="name"
         autoFocus
+        value={notificationText}
         onChange={(e) => setNotificationText(e.target.value)}
       />
-      <Button
-        sx={{
-          mt: 2,
-          background: "#162e4d",
-          ":hover": { backgroundColor: "#002655", color: "#fff" },
-        }}
-        variant="contained"
-        type="submit"
-        onClick={() => notifyHandler()}
-      >
-        Notify
-      </Button>
+      {loading ? (
+        <Button
+          sx={{
+            mt: 2,
+            background: "#162e4d",
+            ":hover": { backgroundColor: "#002655", color: "#fff" },
+          }}
+          variant="contained"
+          style={{ textTransform: "none" }}
+        >
+          <CircularProgress color="inherit" size={20} />
+          Sending...
+        </Button>
+      ) : (
+        <Button
+          sx={{
+            mt: 2,
+            background: "#162e4d",
+            ":hover": { backgroundColor: "#002655", color: "#fff" },
+          }}
+          variant="contained"
+          type="submit"
+          onClick={() => notifyHandler()}
+        >
+          Notify
+        </Button>
+      )}
       <ToastContainer />
     </Container>
   );

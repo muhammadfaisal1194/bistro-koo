@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { API_URL, API_URL_SOCKET } from "../../utils/api";
-import { io } from "socket.io-client";
+import { API_URL } from "../../utils/api";
 import { setBgColor } from "../../redux/layout";
+import { SocketContext } from "../../context/socket";
 
 const DrinkHeader = ({ bgColor }) => {
+  const { socket } = useContext(SocketContext);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
@@ -24,9 +25,11 @@ const DrinkHeader = ({ bgColor }) => {
   const clickHandler = () => {
     navigate("/cart");
   };
+
   const clickBellHandler = () => {
     navigate("/dashboard/chat");
   };
+
   const logoutHandler = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("accessToken");
@@ -37,7 +40,7 @@ const DrinkHeader = ({ bgColor }) => {
     volume: 0.2,
     src: ["/sound.mp3"],
   });
-  const socket = io(API_URL_SOCKET);
+
   socket.on("sendNotification", function (details) {
     audio.play();
     fetchAllNotification();
@@ -61,19 +64,25 @@ const DrinkHeader = ({ bgColor }) => {
   }, [cart]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light  nave-bar opacity" style={{ background: bgColor }}>
+    <nav
+      className="navbar navbar-expand-lg navbar-light  nave-bar opacity"
+      style={{ background: bgColor }}
+    >
       <div className="container-fluid d-flex justify-content-between ">
         <div>
           {token && (
             <ul className="navbar-nav ml-5">
               <li
-                className={`nav-item ${pathname === "/dashboard" ? "active" : ""
-                  }`}
+                className={`nav-item ${
+                  pathname === "/dashboard" ? "active" : ""
+                }`}
               >
                 <Link
                   className="nav-link login"
                   to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
-                  onClick={() => dispatch(setBgColor("rgba(255, 255, 255,0.5)"))}
+                  onClick={() =>
+                    dispatch(setBgColor("rgba(255, 255, 255,0.5)"))
+                  }
                 >
                   Dashboard
                 </Link>

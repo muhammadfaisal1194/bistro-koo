@@ -8,8 +8,9 @@ const MobileDrink = ({
   setSelectedType,
 }) => {
   return (
-    <div className="overflow-scroll"
-      style={{ height: "26.3rem" }}
+    <div
+      className="overflow-scroll"
+      style={{ height: "26.3rem", width: "35%" }}
     >
       <div className="d-flex flex-column">
         {selectedSubCategories.map((cat) => (
@@ -17,8 +18,9 @@ const MobileDrink = ({
             onClick={() => {
               setSelectedType(cat._id);
             }}
-            class={`tab-drink text-center  ${selectedType === cat._id ? "tab-drink-active" : ""
-              }`}
+            class={`tab-drink text-center  ${
+              selectedType === cat._id ? "tab-drink-active" : ""
+            }`}
           >
             <div>
               <FontAwesomeIcon icon={faWineBottle} />
@@ -26,7 +28,8 @@ const MobileDrink = ({
             <div>{cat.name}</div>
           </div>
         ))}
-      </div></div>
+      </div>
+    </div>
   );
 };
 

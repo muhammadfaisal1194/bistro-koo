@@ -11,10 +11,9 @@ import { API_URL } from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setBgColor } from "../../redux/layout";
 
-
 const MobileHome = () => {
   const dispatch = useDispatch();
-  const state = useSelector(state=> state.layout)
+  const state = useSelector((state) => state.layout);
   const [active, setActive] = useState(1);
   const [subDrinks, setSubDrinks] = useState(false);
   const [subSnacks, setSubSnacks] = useState(false);
@@ -137,13 +136,13 @@ const MobileHome = () => {
     }
   };
 
-   const RenderdHeader = () => {
+  const RenderdHeader = () => {
     if (active === 1) {
       return <MenuHeader />;
     } else if (active === 2) {
-      return <DrinkHeader bgColor={state.bgColor}/>;
+      return <DrinkHeader bgColor={state.bgColor} />;
     } else if (active === 3) {
-      return <SnacksHeader bgColor={state.bgColor}/>;
+      return <SnacksHeader bgColor={state.bgColor} />;
     }
   };
 
@@ -152,46 +151,58 @@ const MobileHome = () => {
       <div>
         <RenderdHeader />
       </div>
-      <div className="d-flex justify-content-around" style={{ background: state.bgColor }}>
+      <div
+        className="d-flex justify-content-around"
+        style={{ background: state.bgColor }}
+      >
         <div
           onClick={() => {
-            dispatch (setBgColor("rgba(255, 255, 255,0.5)"))
+            dispatch(setBgColor("rgba(255, 255, 255,0.5)"));
             setActive(1);
             setSubDrinks(false);
             setSubSnacks(false);
           }}
-          class={`tab-menu py-2 px-4 ${active === 1 ? "tab-menu-active" : ""}`}
+          className={`tab-menu py-2 px-4 ${
+            active === 1 ? "tab-menu-active" : ""
+          }`}
         >
           Menu
         </div>
         <div
           onClick={() => {
-            dispatch(setBgColor('rgba(143, 158, 169,0.5)'))
+            dispatch(setBgColor("rgba(143, 158, 169,0.5)"));
             setActive(2);
             setSubDrinks(true);
             setSubSnacks(false);
             setSelectedType(drinksCats[0]._id);
             setSelectedSubCategories(drinksCats);
           }}
-          class={`tab-menu py-2 px-4 ${active === 2 ? "tab-menu-active" : ""}`}
+          className={`tab-menu py-2 px-4 ${
+            active === 2 ? "tab-menu-active" : ""
+          }`}
         >
           Drinks
         </div>
         <div
           onClick={() => {
-            dispatch(setBgColor('rgba(204, 103, 68,0.5)'))
+            dispatch(setBgColor("rgba(204, 103, 68,0.5)"));
             setActive(3);
             setSubDrinks(false);
             setSubSnacks(true);
             setSelectedType(snacksCats[0]._id);
             setSelectedSubCategories(snacksCats);
           }}
-          class={`tab-menu py-2 px-4 ${active === 3 ? "tab-menu-active" : ""}`}
+          className={`tab-menu py-2 px-4 ${
+            active === 3 ? "tab-menu-active" : ""
+          }`}
         >
           Snacks
         </div>
       </div>
-      <div className="pt-2 d-flex justify-content-center" style={{background: state.bgColor }}>
+      <div
+        className="pt-3 d-flex justify-content-around pb-5"
+        style={{ background: state.bgColor }}
+      >
         <RenderdComponent />
       </div>
     </>

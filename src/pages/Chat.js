@@ -1,21 +1,36 @@
-import React, { useState, useEffect, useRef } from "react";
-import io from "socket.io-client";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "../App.css";
-import { API_URL_SOCKET } from "../utils/api";
 import axios from "axios";
 import { API_URL } from "../utils/api";
 import moment from "moment";
+import { SocketContext } from "../context/socket";
 
 const Chat = () => {
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
-  const socket = io(API_URL_SOCKET);
+  const { socket } = useContext(SocketContext);
 
   const [notifications, setNotifications] = useState(null);
-  socket.on("sendNotification", function(details) {
-    fetchAllNotification();
-  });
+  useEffect(() => {
+    async function invokeSocket() {
+      await socket.on("sendNotification", (data) => {
+        console.log("data", data);
+        fetchAllNotification();
+      });
+    }
+    invokeSocket();
+  }, []);
+
+  useEffect(() => {
+    async function invokeSocket() {
+      await socket.on("receive_message", (data) => {
+        console.log("data", data);
+        getChat();
+      });
+    }
+    invokeSocket();
+  }, []);
 
   //************************** Fetch All-Menu Handler ***********************//
   const fetchAllNotification = async () => {
@@ -60,13 +75,6 @@ const Chat = () => {
     setUserName(role);
   }, []);
 
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      console.log("data", data);
-      getChat();
-    });
-  });
-
   const sendMessage = async () => {
     let messageContent = {
       content: {
@@ -83,34 +91,44 @@ const Chat = () => {
 
   const bottomRef = useRef(null);
   useEffect(() => {
-    document.querySelector(".messages").scrollTop = document.querySelector(
-      ".messages"
-    ).scrollHeight;
+    document.querySelector(".messages").scrollTop =
+      document.querySelector(".messages").scrollHeight;
   }, [chat]);
 
   return (
     <>
-      {notifications &&
-        notifications.map((notification) => (
-          <div className="alert success">
-            <span
-              className="closebtn"
-              key={notification._id}
-              onClick={() => removeHandler(notification._id)}
-            >
-              &times;
-            </span>
-            <strong>{notification.notificationText} !!</strong>
-            <br></br>
-            <span>
-              <small>
-                {moment(notification.createdAt).format(
-                  "MMMM Do YYYY, h:mm:ss a"
-                )}
-              </small>
-            </span>
-          </div>
-        ))}
+      <div
+        style={{
+          maxHeight: 350,
+          overflow: "scroll",
+          border: "2px solid black",
+          borderRadius: 5,
+          marginBottom: 5,
+        }}
+      >
+        {notifications &&
+          notifications.map((notification) => (
+            <div className="alert success">
+              <span
+                className="closebtn"
+                key={notification._id}
+                onClick={() => removeHandler(notification._id)}
+                style={{ cursor: "pointer", fontSize: 22, fontWeight: 800 }}
+              >
+                &times;
+              </span>
+              <strong>{notification.notificationText} !!</strong>
+              <br></br>
+              <span>
+                <small>
+                  {moment(notification.createdAt).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  )}
+                </small>
+              </span>
+            </div>
+          ))}
+      </div>
       <div className="chatContainer">
         <div className="messages mt-3 mb-3">
           {chat.map((val, key) => {
@@ -124,7 +142,7 @@ const Chat = () => {
                   {val.message}
                   <br />
                   <small>
-                    {moment(chat.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
+                    {moment(val.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
                   </small>
                 </div>
               </div>

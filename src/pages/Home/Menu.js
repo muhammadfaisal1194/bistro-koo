@@ -8,14 +8,13 @@ const Menu = ({ day, buffets, buffetPrice }) => {
   const navigate = useNavigate();
 
   buffets.map((item) => {
-    console.log(item, "itemmm")
-  })
+    console.log(item, "itemmm");
+  });
 
   const onChangeValue = (event) => {
     setType(event.target.value);
     console.log(event.target.value);
   };
-
 
   const checkoutHandler = () => {
     console.log(cartItems);
@@ -33,15 +32,14 @@ const Menu = ({ day, buffets, buffetPrice }) => {
     }
   };
 
-
   return (
     <div className="fadeInUp mt-5">
       <div className="text-center d-flex flex-column align-items-center">
         {/* <img className="fadeOut" src="/assets/logo.png" alt="" width="100" height="100" /> */}
         <h1 className="heading-color fw-bold menu-spacing">It's {day}</h1>
         <p className="subheading-text">
-          Today is world holiday, In this day people celebrate <br /> lorem ipsum
-          dolor sit amet espene
+          Today is world holiday, In this day people celebrate <br /> lorem
+          ipsum dolor sit amet espene
         </p>
 
         <div className="d-flex justify-content-center align-items-center">
@@ -169,11 +167,6 @@ const Menu = ({ day, buffets, buffetPrice }) => {
         </div>
 
         <div className="menu-color mt-3 " style={{ width: "25rem" }}>
-          {/* <h5 className='spacing'>Special Drinks</h5>
-                <p><span>Special Beer</span> <span className='linebetween'>10$</span></p>
-                <p><span>Lava Cocktails</span> <span className='linebetween'>10$</span></p>
-                <p><span>Orange Juice</span> <span className='linebetween'>10$</span></p>
-                <h5 className='spacing'>Special Snacks</h5> */}
           {buffets.map((item) => (
             <p>
               <span>{item.name}</span>
@@ -182,46 +175,15 @@ const Menu = ({ day, buffets, buffetPrice }) => {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        <div
-          className="form-check col-4"
-          onChange={onChangeValue}
-          style={{ cursor: "pointer" }}
-        >
-          <input
-            className="form-check-input"
-            type="radio"
-            value="Serve on table"
-            checked={type === "Serve on table"}
-          />
-          <label className="form-check-label" for="Serve">
-            Serve on table
-          </label>
-        </div>
-        <div
-          className="form-check"
-          onChange={onChangeValue}
-          style={{ cursor: "pointer" }}
-        >
-          <input
-            className="form-check-input"
-            type="radio"
-            value="Pickup from the counter"
-            checked={type === "Pickup from the counter"}
-          />
-          <label className="form-check-label" for="Pickup">
-            Pickup from the counter
-          </label>
-        </div>
-      </div>
-      <div className="d-flex flex-column align-items-end pe-3">
         <h4>Menu Price {buffetPrice}$</h4>
+      </div>
+      <div className="d-flex justify-content-center">
         <button
           type="button"
-          class="btn btn-lg borderRadious"
+          className="btn btn-lg borderRadious mb-5"
           style={{ background: "#CC6744", color: "white" }}
           onClick={() => {
-            checkoutHandler()
-
+            checkoutHandler();
           }}
         >
           Proceed to payment

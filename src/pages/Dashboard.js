@@ -1,25 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, useNavigate, Outlet, Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingBasket, faBell } from '@fortawesome/free-solid-svg-icons'
-import { io } from "socket.io-client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { API_URL } from "../utils/api";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { API_URL_SOCKET } from "../utils/api";
-import { useSelector } from "react-redux";
-import { Tooltip } from "@mui/material";
+import { SocketContext } from "../context/socket";
 
 const Dashboard = () => {
+  const { socket } = useContext(SocketContext);
   let navigate = useNavigate();
   const role = localStorage.getItem("role");
   const { pathname } = useLocation();
   const [notifications, setNotifications] = useState([]);
-  const isMobile = window.innerWidth <= 500;
-  const [count, setCount] = useState(0);
-  const cart = useSelector((state) => state.cart.cart);
   const token = localStorage.getItem("accessToken");
-  let table = JSON.parse(localStorage.getItem("table"));
+
   const allProducts = () => {
     navigate("/dashboard/allproducts");
   };
@@ -42,9 +37,6 @@ const Dashboard = () => {
     navigate("/dashboard/subcategories");
   };
 
-  const clickHandler = () => {
-    navigate("/cart");
-  };
   const clickBellHandler = () => {
     navigate("/dashboard/chat");
   };
@@ -58,11 +50,17 @@ const Dashboard = () => {
     volume: 0.2,
     src: ["/sound.mp3"],
   });
-  const socket = io(API_URL_SOCKET);
-  socket.on("sendNotification", function (details) {
-    audio.play();
-    fetchAllNotification();
-  });
+
+  useEffect(() => {
+    async function invokeSocket() {
+      await socket.on("sendNotification", function (details) {
+        audio.play();
+        fetchAllNotification();
+      });
+    }
+    invokeSocket();
+  }, []);
+
   const fetchAllNotification = async () => {
     const response = await axios.get(`${API_URL}/notification/index`);
     setNotifications(response.data.data);
@@ -72,29 +70,21 @@ const Dashboard = () => {
     fetchAllNotification();
   }, []);
 
-  useEffect(() => {
-    let c = 0;
-    cart.map((car) => {
-      c += car.quantity;
-    });
-
-    setCount(c);
-  }, [cart]);
   return (
     <>
-
       <nav className="navbar navbar-expand-lg navbar-light nave-bar opacity">
         <div className="container-fluid d-flex justify-content-between ">
           <div>
             {token && (
               <ul className="navbar-nav ml-5">
                 <li
-                  className={`nav-item ${pathname === "/dashboard" ? "active" : ""
-                    }`}
+                  className={`nav-item ${
+                    pathname === "/dashboard" ? "active" : ""
+                  }`}
                 >
                   <Link
                     className="nav-link login"
-                    to={role == 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
+                    to={role === 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
                   >
                     Dashboard
                   </Link>
@@ -113,12 +103,17 @@ const Dashboard = () => {
               </ul>
             )}
           </div>
-          <div >
-            <img src="/assets/logo.png" alt="" width="80" height="80"
-            style={{cursor:"pointer"}}
-             onClick={() => {
-              navigate("/");
-            }} />
+          <div>
+            <img
+              src="/assets/logo.png"
+              alt=""
+              width="80"
+              height="80"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate("/");
+              }}
+            />
           </div>
 
           <div className="border border-1 p-1 position-relative">
@@ -134,7 +129,6 @@ const Dashboard = () => {
               {notifications.length}
             </span>
           </div>
-
         </div>
       </nav>
 
@@ -145,8 +139,9 @@ const Dashboard = () => {
               {role == 1 && (
                 <>
                   <button
-                    className={`btn btn-common  ${pathname === "/dashboard/addproduct" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common  ${
+                      pathname === "/dashboard/addproduct" ? "active-btn" : ""
+                    }`}
                     onClick={() => {
                       addMenu();
                     }}
@@ -156,8 +151,9 @@ const Dashboard = () => {
                     Add Product
                   </button>
                   <button
-                    className={`btn btn-common mt-3 ${pathname === "/dashboard/allproducts" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common mt-3 ${
+                      pathname === "/dashboard/allproducts" ? "active-btn" : ""
+                    }`}
                     onClick={() => {
                       allProducts();
                     }}
@@ -167,8 +163,9 @@ const Dashboard = () => {
                     All Products
                   </button>
                   <button
-                    className={`btn btn-common mt-3 ${pathname === "/dashboard/addmenu" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common mt-3 ${
+                      pathname === "/dashboard/addmenu" ? "active-btn" : ""
+                    }`}
                     onClick={() => {
                       setAddMenu();
                     }}
@@ -178,8 +175,9 @@ const Dashboard = () => {
                     Add Menu
                   </button>
                   <button
-                    className={`btn btn-common mt-3 ${pathname === "/dashboard/allmenus" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common mt-3 ${
+                      pathname === "/dashboard/allmenus" ? "active-btn" : ""
+                    }`}
                     onClick={() => {
                       allMenus();
                     }}
@@ -189,8 +187,9 @@ const Dashboard = () => {
                     All Menus
                   </button>
                   <button
-                    className={`btn btn-common mt-3 ${pathname === "/dashboard/kitchen" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common mt-3 ${
+                      pathname === "/dashboard/kitchen" ? "active-btn" : ""
+                    }`}
                     onClick={() => {
                       notifyKitchen();
                     }}
@@ -200,8 +199,9 @@ const Dashboard = () => {
                     Notify Kitchen
                   </button>
                   <button
-                    className={`btn btn-common mt-3 ${pathname === "/dashboard/orders" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common mt-3 ${
+                      pathname === "/dashboard/orders" ? "active-btn" : ""
+                    }`}
                     onClick={() => {
                       orders();
                     }}
@@ -211,8 +211,11 @@ const Dashboard = () => {
                     All Orders
                   </button>
                   <button
-                    className={`btn btn-common mt-3 ${pathname === "/dashboard/subcategories" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common mt-3 ${
+                      pathname === "/dashboard/subcategories"
+                        ? "active-btn"
+                        : ""
+                    }`}
                     onClick={() => {
                       subcategories();
                     }}
@@ -226,8 +229,9 @@ const Dashboard = () => {
               {(role == 1 || role == 2) && (
                 <>
                   <button
-                    className={`btn btn-common mt-3 ${pathname === "/dashboard/chat" ? "active-btn" : ""
-                      }`}
+                    className={`btn btn-common mt-3 ${
+                      pathname === "/dashboard/chat" ? "active-btn" : ""
+                    }`}
                     onClick={() => {
                       navigate("/dashboard/chat");
                     }}

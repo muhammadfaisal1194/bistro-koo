@@ -15,19 +15,19 @@ import Chat from "./pages/Chat";
 import KitchenModule from "./pages/kitchenModule";
 import ListMenu from "./pages/ListMenu";
 import Menu from "./pages/Menu";
-import MobileHome from "./pages/Home/MobileHome";
 import MobileDetect from "./pages/Home/MobileDetect";
 import PaymentCheckout from "./pages/PaymentCheckout";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Background from "./pages/Background";
+import { SocketContextProvider } from "./context/socket";
 
 function App() {
   return (
-    <>
-      <Provider store={store}>
-        <Background />
+    <Provider store={store}>
+      <Background />
+      <SocketContextProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MobileDetect />} />
@@ -51,9 +51,9 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-        <Footer />
-      </Provider>
-    </>
+      </SocketContextProvider>
+      <Footer />
+    </Provider>
   );
 }
 

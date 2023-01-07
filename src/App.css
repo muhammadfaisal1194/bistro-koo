@@ -12,6 +12,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 50px;
 }
 
 .chatContainer .messages {
@@ -163,7 +164,7 @@
   color: #162e4d;
   cursor: pointer;
   font-weight: 500;
-  height: 64px;
+  height: 60px;
 }
 
 .tab-menu:hover {
@@ -209,7 +210,6 @@
   right: 0.5em;
   margin-left: -12px;
 }
-
 
 #image {
   width: 10%;

@@ -108,11 +108,11 @@ const SnacksHeader = ({ bgColor }) => {
             icon={faShoppingBasket}
             style={{ cursor: "pointer", height: 34 }}
             onClick={() => {
-              navigate("/cart");
+              count == 0 ? navigate("/cart_empty") : navigate("/cart");
               dispatch(setBgColor("rgba(255, 255, 255,0.5)"));
             }}
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
             {count}
           </span>
         </div>

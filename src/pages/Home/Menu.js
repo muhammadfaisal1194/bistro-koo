@@ -33,9 +33,15 @@ const Menu = ({ day, buffets, buffetPrice }) => {
   };
 
   return (
-    <div className="fadeInUp mt-5">
+    <div className="fadeInUp ">
       <div className="text-center d-flex flex-column align-items-center">
-        {/* <img className="fadeOut" src="/assets/logo.png" alt="" width="100" height="100" /> */}
+        <img
+          className="fadeOut opacity-0"
+          src="/assets/logo.png"
+          alt=""
+          width="100"
+          height="100"
+        />
         <h1 className="heading-color fw-bold menu-spacing">It's {day}</h1>
         <p className="subheading-text">
           Today is world holiday, In this day people celebrate <br /> lorem

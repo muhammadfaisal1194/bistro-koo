@@ -106,7 +106,7 @@ const MenuHeader = () => {
             icon={faShoppingBasket}
             style={{ cursor: "pointer", height: 34 }}
             onClick={() => {
-              navigate("/cart");
+              count == 0 ? navigate("/cart_empty") : navigate("/cart")
               dispatch(setBgColor("rgba(255, 255, 255,0.5)"));
             }}
           />

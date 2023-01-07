@@ -183,7 +183,7 @@ const Cart = () => {
               value="Serve on table"
               checked={type === "Serve on table"}
             />
-            <label className="form-check-label" for="Serve">
+            <label className="form-check-label" htmlFor="Serve">
               Serve on table
             </label>
           </div>
@@ -198,7 +198,7 @@ const Cart = () => {
               value="Pickup from the counter"
               checked={type === "Pickup from the counter"}
             />
-            <label className="form-check-label" for="Pickup">
+            <label className="form-check-label" htmlFor="Pickup">
               Pickup from the counter
             </label>
           </div>
@@ -210,7 +210,7 @@ const Cart = () => {
         <div className="d-flex justify-content-center py-1">
           <button
             type="button"
-            class="btn btn-lg borderRadious"
+            className="btn btn-lg borderRadious"
             style={{ background: "#CC6744", color: "white" }}
             onClick={() => checkoutHandler()}
           >

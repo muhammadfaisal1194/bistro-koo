@@ -163,6 +163,7 @@
   color: #162e4d;
   cursor: pointer;
   font-weight: 500;
+  height: 64px;
 }
 
 .tab-menu:hover {
@@ -208,6 +209,7 @@
   right: 0.5em;
   margin-left: -12px;
 }
+
 
 #image {
   width: 10%;
@@ -332,6 +334,7 @@
     opacity: 1;
   }
 }
+
 .fadeUp {
   animation: fadeUp 0.5s ease-in-out;
 }
@@ -369,6 +372,13 @@ body {
 
 .opacity {
   opacity: 90%;
+}
+
+.border-img {
+  position: absolute;
+  left: 95%;
+  top: 32%;
+  padding: 10px 0px;
 }
 
 /* Background */

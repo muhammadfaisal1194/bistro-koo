@@ -9,9 +9,10 @@ import { API_URL } from "../../utils/api";
 import { setBgColor } from "../../redux/layout";
 import { SocketContext } from "../../context/socket";
 
-const MenuHeader = () => {
+const MenuHeader = ({ bgColor }) => {
   const { socket } = useContext(SocketContext);
   const cart = useSelector((state) => state.cart.cart);
+  const state = useSelector((state) => state.layout);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -19,6 +20,13 @@ const MenuHeader = () => {
   const [count, setCount] = useState(0);
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("accessToken");
+  const [showLogo, setShowLogo] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowLogo(true);
+    }, 500);
+  }, []);
 
   const logoutHandler = () => {
     localStorage.removeItem("role");
@@ -61,7 +69,10 @@ const MenuHeader = () => {
   }, [cart]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light nave-bar opacity">
+    <nav
+      className="navbar navbar-expand-lg navbar-light nave-bar opacity"
+      style={{ background: bgColor }}
+    >
       <div className="container-fluid d-flex justify-content-between ">
         <div>
           {token && (
@@ -81,32 +92,32 @@ const MenuHeader = () => {
                   Dashboard
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link login"
-                  to="/"
-                  onClick={() => {
-                    logoutHandler();
-                  }}
-                >
-                  Logout
-                </Link>
-              </li>
             </ul>
           )}
         </div>
-        <div className="fadeIn">
-          <Link to="/">
-            <img src="/assets/logo.png" alt="" width="80" height="80" />
-          </Link>
-        </div>
+        {state.selectedTab == 1 ? (
+          <div
+            className={`fadeIn ${showLogo ? "" : "opacity-0"}`}
+            style={{ marginLeft: 50 }}
+          >
+            <Link to="/">
+              <img src="/assets/logo.png" alt="" width="80" height="80" />
+            </Link>
+          </div>
+        ) : (
+          <div style={{ marginLeft: 50 }}>
+            <Link to="/">
+              <img src="/assets/logo.png" alt="" width="80" height="80" />
+            </Link>
+          </div>
+        )}
 
         <div className="border border-1 p-1 position-relative">
           <FontAwesomeIcon
             icon={faShoppingBasket}
             style={{ cursor: "pointer", height: 34 }}
             onClick={() => {
-              count == 0 ? navigate("/cart_empty") : navigate("/cart")
+              count == 0 ? navigate("/cart_empty") : navigate("/cart");
               dispatch(setBgColor("rgba(255, 255, 255,0.5)"));
             }}
           />

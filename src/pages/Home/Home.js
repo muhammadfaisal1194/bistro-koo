@@ -2,21 +2,19 @@ import React, { useState, useEffect } from "react";
 import Menu from "./Menu";
 import SubCategories from "./SubCategories";
 import MenuHeader from "./MenuHeader";
-import DrinkHeader from "./DrinkHeader";
 import Card from "./Card";
-import SnacksHeader from "./SnacksHeader";
 import DrinkAnimation from "./DrinkAnimation";
 import axios from "axios";
 import { API_URL } from "../../utils/api";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import SnacksAnimation from "./SnacksAnimation";
 import { useDispatch, useSelector } from "react-redux";
 import { setBgColor } from "../../redux/layout";
+import { setSelectedTab } from "../../redux/layout";
 
 const Home = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.layout);
-  const [active, setActive] = useState(1);
   const [subDrinks, setSubDrinks] = useState(false);
   const [subSnacks, setSubSnacks] = useState(false);
   const [buffets, setBuffets] = useState([]);
@@ -33,6 +31,7 @@ const Home = () => {
   const [type, setType] = useState("Serve on table");
   const [thumbnail, setThumbnail] = useState(null);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
+  const [loading, setLoading] = useState();
 
   const weekday = [
     "Sunday",
@@ -120,9 +119,9 @@ const Home = () => {
   }, [selectedType]);
 
   const RenderdComponent = () => {
-    if (active === 1) {
+    if (state.selectedTab === 1) {
       return <Menu day={day} buffets={buffets} buffetPrice={buffetPrice} />;
-    } else if (active === 2 || active === 3) {
+    } else if (state.selectedTab === 2 || state.selectedTab === 3) {
       return (
         <>
           <SubCategories
@@ -137,21 +136,21 @@ const Home = () => {
   };
 
   const RenderdHeader = () => {
-    if (active === 1) {
-      return <MenuHeader />;
-    } else if (active === 2) {
-      return <DrinkHeader bgColor={state.bgColor} />;
-    } else if (active === 3) {
-      return <SnacksHeader bgColor={state.bgColor} />;
+    if (state.selectedTab === 1) {
+      return <MenuHeader bgColor={state.bgColor} />;
+    } else if (state.selectedTab === 2) {
+      return <MenuHeader bgColor={state.bgColor} />;
+    } else if (state.selectedTab === 3) {
+      return <MenuHeader bgColor={state.bgColor} />;
     }
   };
 
   const RenderdAnimation = () => {
-    if (active === 1) {
+    if (state.selectedTab === 1) {
       return <SnacksAnimation />;
-    } else if (active === 2) {
+    } else if (state.selectedTab === 2) {
       return <DrinkAnimation />;
-    } else if (active === 3) {
+    } else if (state.selectedTab === 3) {
       return <SnacksAnimation />;
     }
   };
@@ -168,12 +167,12 @@ const Home = () => {
               <div
                 onClick={() => {
                   dispatch(setBgColor("rgba(255, 255, 255,0.5)"));
-                  setActive(1);
+                  dispatch(setSelectedTab(1));
                   setSubDrinks(false);
                   setSubSnacks(false);
                 }}
                 className={`tab-menu py-2 px-4 ${
-                  active === 1 ? "tab-menu-active" : ""
+                  state.selectedTab === 1 ? "tab-menu-active" : ""
                 }`}
               >
                 Menu
@@ -181,14 +180,14 @@ const Home = () => {
               <div
                 onClick={() => {
                   dispatch(setBgColor("rgba(143, 158, 169,0.5)"));
-                  setActive(2);
+                  dispatch(setSelectedTab(2));
                   setSubDrinks(true);
                   setSubSnacks(false);
                   setSelectedType(drinksCats[0]._id);
                   setSelectedSubCategories(drinksCats);
                 }}
                 className={`tab-menu py-2 px-4 ${
-                  active === 2 ? "tab-menu-active" : ""
+                  state.selectedTab === 2 ? "tab-menu-active" : ""
                 }`}
               >
                 Drinks
@@ -196,14 +195,14 @@ const Home = () => {
               <div
                 onClick={() => {
                   dispatch(setBgColor("rgba(204, 103, 68,0.5)"));
-                  setActive(3);
+                  dispatch(setSelectedTab(3));
                   setSubDrinks(false);
                   setSubSnacks(true);
                   setSelectedType(snacksCats[0]._id);
                   setSelectedSubCategories(snacksCats);
                 }}
                 className={`tab-menu py-2 px-4 ${
-                  active === 3 ? "tab-menu-active" : ""
+                  state.selectedTab === 3 ? "tab-menu-active" : ""
                 }`}
               >
                 Snacks

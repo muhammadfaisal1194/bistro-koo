@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,13 @@ const Menu = ({ day, buffets, buffetPrice }) => {
   const cartItems = useSelector((state) => state.cart.cart);
   const [type, setType] = useState("Serve on table");
   const navigate = useNavigate();
+  const [showLogo, setShowLogo] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowLogo(false);
+    }, 500);
+  }, []);
 
   buffets.map((item) => {
     console.log(item, "itemmm");
@@ -36,12 +43,13 @@ const Menu = ({ day, buffets, buffetPrice }) => {
     <div className="fadeInUp ">
       <div className="text-center d-flex flex-column align-items-center">
         <img
-          className="fadeOut opacity-0"
+          className={`fadeOut ${showLogo ? "" : "opacity-0"}`}
           src="/assets/logo.png"
           alt=""
           width="100"
           height="100"
         />
+
         <h1 className="heading-color fw-bold menu-spacing">It's {day}</h1>
         <p className="subheading-text">
           Today is world holiday, In this day people celebrate <br /> lorem

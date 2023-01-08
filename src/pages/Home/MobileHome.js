@@ -10,6 +10,7 @@ import axios from "axios";
 import { API_URL } from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setBgColor } from "../../redux/layout";
+import { setSelectedTab } from "../../redux/layout";
 
 const MobileHome = () => {
   const dispatch = useDispatch();
@@ -120,9 +121,9 @@ const MobileHome = () => {
   }, [selectedType]);
 
   const RenderdComponent = () => {
-    if (active === 1) {
+    if (state.selectedTab === 1) {
       return <Menu day={day} buffets={buffets} buffetPrice={buffetPrice} />;
-    } else if (active === 2 || active === 3) {
+    } else if (state.selectedTab === 2 || state.selectedTab === 3) {
       return (
         <>
           <MobileDrink
@@ -137,12 +138,12 @@ const MobileHome = () => {
   };
 
   const RenderdHeader = () => {
-    if (active === 1) {
-      return <MenuHeader />;
-    } else if (active === 2) {
-      return <DrinkHeader bgColor={state.bgColor} />;
-    } else if (active === 3) {
-      return <SnacksHeader bgColor={state.bgColor} />;
+    if (state.selectedTab === 1) {
+      return <MenuHeader bgColor={state.bgColor} />;
+    } else if (state.selectedTab === 2) {
+      return <MenuHeader bgColor={state.bgColor} />;
+    } else if (state.selectedTab === 3) {
+      return <MenuHeader bgColor={state.bgColor} />;
     }
   };
 
@@ -158,12 +159,12 @@ const MobileHome = () => {
         <div
           onClick={() => {
             dispatch(setBgColor("rgba(255, 255, 255,0.5)"));
-            setActive(1);
+            dispatch(setSelectedTab(1));
             setSubDrinks(false);
             setSubSnacks(false);
           }}
           className={`tab-menu py-2 px-4 ${
-            active === 1 ? "tab-menu-active" : ""
+            state.selectedTab === 1 ? "tab-menu-active" : ""
           }`}
         >
           Menu
@@ -171,14 +172,14 @@ const MobileHome = () => {
         <div
           onClick={() => {
             dispatch(setBgColor("rgba(143, 158, 169,0.5)"));
-            setActive(2);
+            dispatch(setSelectedTab(2));
             setSubDrinks(true);
             setSubSnacks(false);
             setSelectedType(drinksCats[0]._id);
             setSelectedSubCategories(drinksCats);
           }}
           className={`tab-menu py-2 px-4 ${
-            active === 2 ? "tab-menu-active" : ""
+            state.selectedTab === 2 ? "tab-menu-active" : ""
           }`}
         >
           Drinks
@@ -186,14 +187,14 @@ const MobileHome = () => {
         <div
           onClick={() => {
             dispatch(setBgColor("rgba(204, 103, 68,0.5)"));
-            setActive(3);
+            dispatch(setSelectedTab(3));
             setSubDrinks(false);
             setSubSnacks(true);
             setSelectedType(snacksCats[0]._id);
             setSelectedSubCategories(snacksCats);
           }}
           className={`tab-menu py-2 px-4 ${
-            active === 3 ? "tab-menu-active" : ""
+            state.selectedTab === 3 ? "tab-menu-active" : ""
           }`}
         >
           Snacks

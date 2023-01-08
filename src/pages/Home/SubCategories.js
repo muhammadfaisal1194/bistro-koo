@@ -28,6 +28,7 @@ const SubCategories = ({
       items: 1,
     },
   };
+
   return (
     <Carousel
       swipeable={false}

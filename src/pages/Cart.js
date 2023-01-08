@@ -19,13 +19,15 @@ import {
 import { Button } from "@mui/material";
 
 const Cart = () => {
+  const state = useSelector((state) => state.layout);
   const [cartitem, setCarItem] = useState([]);
   const [buffetPrice, setBuffetPrice] = useState(0);
   const cartItems = useSelector((state) => state.cart.cart);
   const [type, setType] = useState("Serve on table");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [Back, setBack] = useState("");
 
   const fetchBuffetPrice = async () => {
     const response = await axios.get(`${API_URL}/buffet/index`);
@@ -74,32 +76,40 @@ const Cart = () => {
   useEffect(() => {
     let price = 0;
     cartItems.map((item) => {
-      price = price + (item.price)
-    })
-    setTotalPrice(price)
+      price = price + item.price;
+    });
+    setTotalPrice(price);
   }, [cartitem]);
+
+  useEffect(() => {
+    if (state.selectedTab === 1) {
+      setBack("Menu");
+    } else if (state.selectedTab === 2) {
+      setBack("Drinks");
+    } else if (state.selectedTab === 3) {
+      setBack("Snacks");
+    }
+  }, []);
 
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light nave-bar">
         <div className="container-fluid d-flex justify-content-between ">
-          <Link to="/">
-            <button
-              type="button"
-              className="btn btn-outline-dark borderRadious"
-            >
-              &larr; Back to Drink
-            </button>
-          </Link>
           <div>
-            <img src="/assets/logo.png" alt="" width="80" height="80"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate("/");
-              }} />
+            <Link to="/">
+              <button
+                type="button"
+                className="btn btn-outline-dark borderRadious"
+              >
+                &larr; Back to {Back}
+              </button>
+            </Link>
+          </div>
+          <div>
+            <img src="/assets/logo.png" alt="" width="80" height="80" />
           </div>
 
-          <div className="border border-1">
+          <div className="border border-1 p-1">
             <FontAwesomeIcon
               icon={faShoppingBasket}
               style={{ height: "34px" }}

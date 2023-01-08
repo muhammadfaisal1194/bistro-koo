@@ -155,6 +155,28 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    if (state.selectedTab === 1) {
+      setSubDrinks(false);
+      setSubSnacks(false);
+    } else if (state.selectedTab === 2) {
+      setSubDrinks(true);
+      setSubSnacks(false);
+      if (drinksCats.length > 0) {
+        console.log("drinksssssssssssssssss", drinksCats[0]);
+        setSelectedType(drinksCats[0]._id);
+        setSelectedSubCategories(drinksCats);
+      }
+    } else if (state.selectedTab === 3) {
+      setSubSnacks(true);
+      setSubDrinks(false);
+      if (snacksCats.length > 0) {
+        setSelectedType(snacksCats[0]._id);
+        setSelectedSubCategories(snacksCats);
+      }
+    }
+  }, [snacksCats, drinksCats]);
+
   return (
     <>
       <div>

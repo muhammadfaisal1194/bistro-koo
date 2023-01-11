@@ -9,7 +9,7 @@ import socketClient from "socket.io-client";
 const Dashboard = () => {
   const state = useSelector((state) => state.notifications);
   let navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const role = JSON.parse(localStorage.getItem("role"));
   const { pathname } = useLocation();
   const token = localStorage.getItem("accessToken");
   const socket = socketClient(API_URL_SOCKET, { transports: ["websocket"] });
@@ -53,16 +53,15 @@ const Dashboard = () => {
     navigate("/");
   };
 
-  const audio = new Audio({
-    loop: true,
-    volume: 0.2,
-    src: ["/sound.mp3"],
-  });
+  const audio = new Audio("/sound.mp3");
 
   useEffect(() => {
     socket.on("sendNotification", function (data) {
-      audio();
+      if(role == 2){
+        audio.play()
+      }
     });
+   
   }, []);
 
 

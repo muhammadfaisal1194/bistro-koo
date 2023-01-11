@@ -3,6 +3,8 @@ import { useLocation, useNavigate, Outlet } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import { API_URL, API_URL_SOCKET } from "../utils/api";
+import socketClient from "socket.io-client";
 
 const Dashboard = () => {
   const state = useSelector((state) => state.notifications);
@@ -10,6 +12,7 @@ const Dashboard = () => {
   const role = localStorage.getItem("role");
   const { pathname } = useLocation();
   const token = localStorage.getItem("accessToken");
+  const socket = socketClient(API_URL_SOCKET, { transports: ["websocket"] });
 
   useEffect(() => {
     if (!token) {
@@ -55,6 +58,13 @@ const Dashboard = () => {
     volume: 0.2,
     src: ["/sound.mp3"],
   });
+
+  useEffect(() => {
+    socket.on("sendNotification", function (data) {
+      audio();
+    });
+  }, []);
+
 
   return (
     <>

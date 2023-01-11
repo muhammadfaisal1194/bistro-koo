@@ -29,7 +29,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
-  const [Back, setBack] = useState("");
+  const [back, setBack] = useState("");
   const [count, setCount] = useState(0);
 
   const fetchBuffetPrice = async () => {
@@ -117,7 +117,7 @@ const Cart = () => {
                 type="button"
                 className="btn btn-outline-dark borderRadious"
               >
-                &larr; Back to {Back}
+                &larr; Back to {back}
               </button>
             </Link>
           </div>

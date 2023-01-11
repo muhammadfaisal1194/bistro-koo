@@ -21,6 +21,9 @@ import { store } from "./redux/store";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Background from "./pages/Background";
 import EditProduct from "./pages/EditProduct";
+import EditMenu from "./pages/EditMenu";
+import EditOrder from "./pages/EditOrder";
+import ViewOrder from "./pages/ViewOrder";
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
             <Route path="/dashboard/allproducts" element={<ListMenu />} />
             <Route path="/dashboard/addproduct" element={<AddProduct />} />
             <Route path="editproduct/:id" element={<EditProduct />} />
+            <Route path="editmenu/:id" element={<EditMenu />} />
+            <Route path="editorders/:id" element={<EditOrder />} />
+            <Route path="vieworder/:id" element={<ViewOrder />} />
             <Route path="/dashboard/addmenu" element={<AddMenu />} />
             <Route path="/dashboard/allmenus" element={<Menu />} />
             <Route path="/dashboard/kitchen" element={<KitchenModule />} />

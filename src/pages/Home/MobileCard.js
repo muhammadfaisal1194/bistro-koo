@@ -33,7 +33,7 @@ const MobileCard = ({ selectedTypeItems }) => {
       style={{ width: " 13rem", height: "26.3rem" }}
     >
       {selectedTypeItems.map((item, index) => (
-        <div className="card borderRadious mb-2" style={{ width: "13rem" , background : "transparent" }}>
+        <div className="card borderRadious mb-2" style={{ width: "13rem" ,height:"13.4rem", background : "transparent" }}>
           <img
             src={`${IMAGE_URL}/${item.thumbnail}`}
             className="card-img-top borderRadious"

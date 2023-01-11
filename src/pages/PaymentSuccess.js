@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const PaymentSuccess = () => {
   const navigate = useNavigate();
   const state = useSelector((state) => state.layout);
-  const [Back, setBack] = useState("");
+  const [back, setBack] = useState("");
 
   useEffect(() => {
     if (state.selectedTab === 1) {
@@ -28,7 +28,7 @@ const PaymentSuccess = () => {
               navigate("/");
             }}
           >
-            &larr; Back to {Back}
+            &larr; Back to {back}
           </button>
           <div>
             <img src="/assets/logo.png" alt="" width="80" height="80" />

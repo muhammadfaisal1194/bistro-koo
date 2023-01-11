@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const CartEmpty = () => {
   const state = useSelector((state) => state.layout);
-  const [Back, setBack] = useState("");
+  const [back, setBack] = useState("");
 
   useEffect(() => {
     if (state.selectedTab === 1) {
@@ -28,7 +28,7 @@ const CartEmpty = () => {
                 type="button"
                 className="btn btn-outline-dark borderRadious"
               >
-                &larr; Back to {Back}
+                &larr; Back to {back}
               </button>
             </Link>
           </div>

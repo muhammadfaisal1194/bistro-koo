@@ -34,7 +34,6 @@ const Home = () => {
   const [selectedTypeItems, setSelectedTypeItems] = useState([]);
   const [buffetPrice, setBuffetPrice] = useState([]);
   const [freeItem, setFreeItem] = useState([]);
-  const [type, setType] = useState("Serve on table");
   const [thumbnail, setThumbnail] = useState(null);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -260,7 +259,7 @@ const Home = () => {
                 className="border-img"
                 xmlns="http://www.w3.org/2000/svg"
                 width="19.236"
-                height="114.216"
+                height="99.216"
                 viewBox="0 0 19.236 114.216"
               >
                 <g id="spoon" transform="translate(-30.224 -22.63)">

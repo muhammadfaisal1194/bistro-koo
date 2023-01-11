@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { Button, TextField, CircularProgress } from "@mui/material";
@@ -6,12 +6,13 @@ import { API_URL } from "../utils/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Container } from "@mui/system";
-import { SocketContext } from "../context/socket";
+import { API_URL_SOCKET } from "../utils/api";
+import socketClient from "socket.io-client";
 
 const Kitchen = () => {
-  const { socket } = useContext(SocketContext);
   const [notificationText, setNotificationText] = useState("");
   const [loading, setLoading] = useState(false);
+  const socket = socketClient(API_URL_SOCKET, { transports: ["websocket"] });
 
   const notifyHandler = () => {
     socket.emit("sendNotification", {

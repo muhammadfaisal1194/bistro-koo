@@ -1,10 +1,12 @@
 // ** Reducers Imports
-import cart from "./cart"
-import layout from "./layout"
+import cart from "./cart";
+import layout from "./layout";
+import notifications from "./notifications";
 
 const rootReducer = {
   cart,
-  layout
-}
+  layout,
+  notifications,
+};
 
-export default rootReducer
+export default rootReducer;

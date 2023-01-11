@@ -1,48 +1,43 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import axios from "axios";
-import { API_URL } from "../utils/api";
+import { API_URL, API_URL_SOCKET } from "../utils/api";
 import moment from "moment";
-import { SocketContext } from "../context/socket";
+import socketClient from "socket.io-client";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotifications } from "../redux/notifications";
 
 const Chat = () => {
+  const socket = socketClient(API_URL_SOCKET, { transports: ["websocket"] });
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.notifications);
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
-  const { socket } = useContext(SocketContext);
-
-  const [notifications, setNotifications] = useState(null);
-  useEffect(() => {
-    async function invokeSocket() {
-      await socket.on("sendNotification", (data) => {
-        console.log("data", data);
-        fetchAllNotification();
-      });
-    }
-    invokeSocket();
-  }, []);
+  const role = JSON.parse(localStorage.getItem("role"));
 
   useEffect(() => {
-    async function invokeSocket() {
-      await socket.on("receive_message", (data) => {
-        console.log("data", data);
-        getChat();
-      });
-    }
-    invokeSocket();
+    socket.on("sendNotification", function (data) {
+      fetchAllNotification();
+    });
+    socket.on("receive_message", (data) => {
+      getChat();
+    });
   }, []);
 
   //************************** Fetch All-Menu Handler ***********************//
   const fetchAllNotification = async () => {
     const response = await axios.get(`${API_URL}/notification/index`);
-    setNotifications(response.data.data);
+    dispatch(setNotifications(response.data.data));
   };
   const removeHandler = async (id) => {
     try {
       const response = await axios.delete(
         `${API_URL}/notification/delete/${id}`
       );
-      fetchAllNotification();
+      if (response) {
+        fetchAllNotification();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +57,6 @@ const Chat = () => {
         author: userName,
         message: message,
       });
-      console.log(response);
       return response;
     } catch (error) {
       console.log(error);
@@ -89,7 +83,6 @@ const Chat = () => {
     setMessage("");
   };
 
-  const bottomRef = useRef(null);
   useEffect(() => {
     document.querySelector(".messages").scrollTop =
       document.querySelector(".messages").scrollHeight;
@@ -97,38 +90,41 @@ const Chat = () => {
 
   return (
     <>
-      <div
-        style={{
-          maxHeight: 350,
-          overflow: "scroll",
-          border: "2px solid black",
-          borderRadius: 5,
-          marginBottom: 5,
-        }}
-      >
-        {notifications &&
-          notifications.map((notification) => (
-            <div className="alert success">
-              <span
-                className="closebtn"
-                key={notification._id}
-                onClick={() => removeHandler(notification._id)}
-                style={{ cursor: "pointer", fontSize: 22, fontWeight: 800 }}
-              >
-                &times;
-              </span>
-              <strong>{notification.notificationText} !!</strong>
-              <br></br>
-              <span>
-                <small>
-                  {moment(notification.createdAt).format(
-                    "MMMM Do YYYY, h:mm:ss a"
-                  )}
-                </small>
-              </span>
-            </div>
-          ))}
-      </div>
+      {role !== 1 && (
+        <div
+          style={{
+            maxHeight: 350,
+            minHeight: 350,
+            overflow: "scroll",
+            border: "2px solid black",
+            borderRadius: 5,
+            marginBottom: 5,
+          }}
+        >
+          {state.notificationsList &&
+            state.notificationsList.map((notification) => (
+              <div className="alert success">
+                <span
+                  className="closebtn"
+                  key={notification._id}
+                  onClick={() => removeHandler(notification._id)}
+                  style={{ cursor: "pointer", fontSize: 22, fontWeight: 800 }}
+                >
+                  &times;
+                </span>
+                <strong>{notification.notificationText} !!</strong>
+                <br></br>
+                <span>
+                  <small>
+                    {moment(notification.createdAt).format(
+                      "MMMM Do YYYY, h:mm:ss a"
+                    )}
+                  </small>
+                </span>
+              </div>
+            ))}
+        </div>
+      )}
       <div className="chatContainer">
         <div className="messages mt-3 mb-3">
           {chat.map((val, key) => {

@@ -6,6 +6,7 @@ import { IMAGE_URL } from "./../../utils/api";
 const Card = ({ item }) => {
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
+  console.log("itemsssssssssssssssssssssssss", item);
 
   const addItem = (item) => {
     let cartCopy = [...cart];

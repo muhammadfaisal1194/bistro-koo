@@ -6,14 +6,20 @@ import Card from "./Card";
 import DrinkAnimation from "./DrinkAnimation";
 import axios from "axios";
 import { API_URL } from "../../utils/api";
-import { useSearchParams } from "react-router-dom";
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import SnacksAnimation from "./SnacksAnimation";
 import { useDispatch, useSelector } from "react-redux";
 import { setBgColor } from "../../redux/layout";
 import { setSelectedTab } from "../../redux/layout";
+import ReactLoading from "react-loading";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const state = useSelector((state) => state.layout);
   const [subDrinks, setSubDrinks] = useState(false);
   const [subSnacks, setSubSnacks] = useState(false);
@@ -31,7 +37,7 @@ const Home = () => {
   const [type, setType] = useState("Serve on table");
   const [thumbnail, setThumbnail] = useState(null);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
 
   const weekday = [
     "Sunday",
@@ -53,7 +59,12 @@ const Home = () => {
     const response = await axios.get(`${API_URL}/items/index`);
     const responseMenu = await axios.get(`${API_URL}/menus/index`);
     setMenus(response.data.data);
+    console.log("responseeeeeeeeeeeeeeeeeeeee", response.data.data);
     if (response.data) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+
       response.data.data.map((d) => {
         if (d.type === "Buffet") {
           bfs.push(d);
@@ -85,6 +96,17 @@ const Home = () => {
       : localStorage.setItem("table", 0);
   }, []);
 
+  useEffect(() => {
+    const params = {
+      table: 0,
+    };
+    const options = {
+      pathname: "/",
+      search: `?${createSearchParams(params)}`,
+    };
+    navigate(options, { replace: true });
+  }, []);
+
   const fetchSubCategories = async () => {
     try {
       const response = await axios.get(`${API_URL}/subcategory/index`);
@@ -99,6 +121,9 @@ const Home = () => {
         }
       });
       setDrinksCats(drs);
+      if (state.selectedTab === 2) {
+        setSelectedType(drs[0]._id);
+      }
       setSnacksCats(sns);
     } catch (error) {
       console.log(error);
@@ -113,10 +138,12 @@ const Home = () => {
   useEffect(() => {
     let selected = [];
     menus.map((menu) => {
-      if (menu.subType == selectedType) selected.push(menu);
+      if (menu.subType == selectedType) {
+        selected.push(menu);
+      }
     });
     setSelectedTypeItems(selected);
-  }, [selectedType]);
+  }, [selectedType, menus]);
 
   const RenderdComponent = () => {
     if (state.selectedTab === 1) {
@@ -163,7 +190,6 @@ const Home = () => {
       setSubDrinks(true);
       setSubSnacks(false);
       if (drinksCats.length > 0) {
-        console.log("drinksssssssssssssssss", drinksCats[0]);
         setSelectedType(drinksCats[0]._id);
         setSelectedSubCategories(drinksCats);
       }
@@ -250,12 +276,25 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-8">
-          <RenderdComponent />
-        </div>
-        <div className="col-md-2 pt-5">
-          <RenderdAnimation />
-        </div>
+        {loading ? (
+          <div
+            className="col-md-12 d-flex align-items-center justify-content-center"
+            style={{ height: 300 }}
+          >
+            <div className="">
+              <ReactLoading type={"bars"} color={"#162e4d"} />
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="col-md-8">
+              <RenderdComponent />
+            </div>
+            <div className="col-md-2 pt-5">
+              <RenderdAnimation />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

@@ -17,9 +17,11 @@ import {
   decreaseCartItemQuantity,
 } from "./../redux/cart";
 import { Button } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
 const Cart = () => {
   const state = useSelector((state) => state.layout);
+  const cart = useSelector((state) => state.cart.cart);
   const [cartitem, setCarItem] = useState([]);
   const [buffetPrice, setBuffetPrice] = useState(0);
   const cartItems = useSelector((state) => state.cart.cart);
@@ -28,6 +30,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
   const [Back, setBack] = useState("");
+  const [count, setCount] = useState(0);
 
   const fetchBuffetPrice = async () => {
     const response = await axios.get(`${API_URL}/buffet/index`);
@@ -36,6 +39,10 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
+    if (count == 0) {
+      toast.error("You can't proceed with zero quantity!");
+      return;
+    }
     console.log(cartItems);
     let totalprice = 0;
     let buffet = 0;
@@ -91,6 +98,15 @@ const Cart = () => {
     }
   }, []);
 
+  useEffect(() => {
+    let c = 0;
+    cart.map((car) => {
+      c += car.quantity;
+    });
+
+    setCount(c);
+  }, [cart]);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light nave-bar">
@@ -106,14 +122,19 @@ const Cart = () => {
             </Link>
           </div>
           <div>
-            <img src="/assets/logo.png" alt="" width="80" height="80" />
+            <Link to={`/`}>
+              <img src="/assets/logo.png" alt="" width="80" height="80" />
+            </Link>
           </div>
 
-          <div className="border border-1 p-1">
+          <div className="border border-1 p-1 position-relative">
             <FontAwesomeIcon
               icon={faShoppingBasket}
               style={{ height: "34px" }}
             />
+            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+              {count}
+            </span>
           </div>
         </div>
       </nav>
@@ -227,6 +248,7 @@ const Cart = () => {
             Proceed to payment
           </button>
         </div>
+        <ToastContainer />
       </div>
     </>
   );

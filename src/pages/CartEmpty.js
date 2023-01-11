@@ -32,7 +32,7 @@ const CartEmpty = () => {
               </button>
             </Link>
           </div>
-          <div>
+          <div style={{ marginRight: 105 }}>
             <img src="/assets/logo.png" alt="" width="80" height="80" />
           </div>
 

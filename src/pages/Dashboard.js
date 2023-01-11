@@ -1,19 +1,21 @@
-import React, { useContext } from "react";
-import { useLocation, useNavigate, Outlet, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate, Outlet } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { API_URL } from "../utils/api";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { SocketContext } from "../context/socket";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const { socket } = useContext(SocketContext);
+  const state = useSelector((state) => state.notifications);
   let navigate = useNavigate();
   const role = localStorage.getItem("role");
   const { pathname } = useLocation();
-  const [notifications, setNotifications] = useState([]);
   const token = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, []);
 
   const allProducts = () => {
     navigate("/dashboard/allproducts");
@@ -40,69 +42,25 @@ const Dashboard = () => {
   const clickBellHandler = () => {
     navigate("/dashboard/chat");
   };
+
   const logoutHandler = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
+    navigate("/");
   };
+
   const audio = new Audio({
     loop: true,
     volume: 0.2,
     src: ["/sound.mp3"],
   });
 
-  useEffect(() => {
-    async function invokeSocket() {
-      await socket.on("sendNotification", function (details) {
-        audio.play();
-        fetchAllNotification();
-      });
-    }
-    invokeSocket();
-  }, []);
-
-  const fetchAllNotification = async () => {
-    const response = await axios.get(`${API_URL}/notification/index`);
-    setNotifications(response.data.data);
-  };
-
-  useEffect(() => {
-    fetchAllNotification();
-  }, []);
-
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light nave-bar opacity">
         <div className="container-fluid d-flex justify-content-between ">
-          <div>
-            {token && (
-              <ul className="navbar-nav ml-5">
-                <li
-                  className={`nav-item ${
-                    pathname === "/dashboard" ? "active" : ""
-                  }`}
-                >
-                  <Link
-                    className="nav-link login"
-                    to={role === 1 ? `/dashboard/allmenus` : `/dashboard/chat`}
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link login"
-                    to="/"
-                    onClick={() => {
-                      logoutHandler();
-                    }}
-                  >
-                    Logout
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </div>
+          <div></div>
           <div>
             <img
               src="/assets/logo.png"
@@ -126,20 +84,32 @@ const Dashboard = () => {
               }}
             />
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-              {notifications.length}
+              {state.notificationsList.length}
             </span>
           </div>
         </div>
       </nav>
 
       <div className="menu-box">
-        <div className="container mt-5">
+        <div className="container mt-5 mb-5">
           <div className="row">
             <div className="col-md-2">
+              {token && (
+                <button
+                  className={`btn btn-common`}
+                  onClick={() => {
+                    logoutHandler();
+                  }}
+                  style={{ minWidth: 200 }}
+                >
+                  {" "}
+                  Logout
+                </button>
+              )}
               {role == 1 && (
                 <>
                   <button
-                    className={`btn btn-common  ${
+                    className={`btn btn-common mt-3  ${
                       pathname === "/dashboard/addproduct" ? "active-btn" : ""
                     }`}
                     onClick={() => {
@@ -242,7 +212,7 @@ const Dashboard = () => {
                 </>
               )}
             </div>
-            <div className="col-md-10 px-5 ">
+            <div className="col-md-10 px-5">
               <Outlet />
             </div>
           </div>

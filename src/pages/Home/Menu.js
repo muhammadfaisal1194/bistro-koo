@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Menu = ({ day, buffets, buffetPrice }) => {
   const cartItems = useSelector((state) => state.cart.cart);
@@ -18,23 +19,12 @@ const Menu = ({ day, buffets, buffetPrice }) => {
     console.log(item, "itemmm");
   });
 
-  const onChangeValue = (event) => {
-    setType(event.target.value);
-    console.log(event.target.value);
-  };
-
   const checkoutHandler = () => {
-    console.log(cartItems);
-    let totalprice = 0;
-    let buffet = 0;
-    for (let i = 0; i < cartItems.length; i++) {
-      if (cartItems[i].type === "Buffet")
-        buffet += buffetPrice * cartItems[i].quantity;
-      else totalprice += cartItems[i].price * cartItems[i].quantity;
-    }
-    localStorage.setItem("amount", JSON.stringify(totalprice + buffet));
-    localStorage.setItem("serveType", JSON.stringify(type));
-    if (cartItems.length > 0) {
+    localStorage.setItem("amount", JSON.stringify(buffetPrice));
+    localStorage.setItem("serveType", JSON.stringify("Server on table"));
+    if (buffetPrice < 0) {
+      toast.error("No items in buffet!");
+    } else {
       navigate("/payment");
     }
   };
@@ -189,12 +179,12 @@ const Menu = ({ day, buffets, buffetPrice }) => {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        <h4>Menu Price {buffetPrice}$</h4>
+        <h6>Menu Price {buffetPrice}$</h6>
       </div>
       <div className="d-flex justify-content-center">
         <button
           type="button"
-          className="btn btn-lg borderRadious mb-5"
+          className="btn btn-sm borderRadious mb-5"
           style={{ background: "#CC6744", color: "white" }}
           onClick={() => {
             checkoutHandler();
@@ -203,6 +193,7 @@ const Menu = ({ day, buffets, buffetPrice }) => {
           Proceed to payment
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

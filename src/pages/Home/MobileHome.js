@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import Menu from "./Menu";
 import MobileDrink from "./MobileDrink";
 import MenuHeader from "./MenuHeader";
-import DrinkHeader from "./DrinkHeader";
-import SnacksHeader from "./SnacksHeader";
 import MobileCard from "./MobileCard";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -11,11 +9,11 @@ import { API_URL } from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setBgColor } from "../../redux/layout";
 import { setSelectedTab } from "../../redux/layout";
+import ReactLoading from "react-loading";
 
 const MobileHome = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.layout);
-  const [active, setActive] = useState(1);
   const [subDrinks, setSubDrinks] = useState(false);
   const [subSnacks, setSubSnacks] = useState(false);
   const [buffets, setBuffets] = useState([]);
@@ -32,6 +30,7 @@ const MobileHome = () => {
   const [type, setType] = useState("Serve on table");
   const [thumbnail, setThumbnail] = useState(null);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const weekday = [
     "Sunday",
@@ -54,6 +53,9 @@ const MobileHome = () => {
     const responseMenu = await axios.get(`${API_URL}/menus/index`);
     setMenus(response.data.data);
     if (response.data) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
       response.data.data.map((d) => {
         if (d.type === "Buffet") {
           bfs.push(d);
@@ -73,7 +75,6 @@ const MobileHome = () => {
           setFreeItem(responseMenu.data.data.freeItem);
           setDrinks(drs);
           setSnacks(sns);
-          // console.log(drs, "drrrrrrrrrr")
         }
       }
     }
@@ -116,9 +117,8 @@ const MobileHome = () => {
     menus.map((menu) => {
       if (menu.subType == selectedType) selected.push(menu);
     });
-    console.log("selected type: ", selected);
     setSelectedTypeItems(selected);
-  }, [selectedType]);
+  }, [selectedType, menus]);
 
   const RenderdComponent = () => {
     if (state.selectedTab === 1) {
@@ -146,6 +146,27 @@ const MobileHome = () => {
       return <MenuHeader bgColor={state.bgColor} />;
     }
   };
+
+  useEffect(() => {
+    if (state.selectedTab === 1) {
+      setSubDrinks(false);
+      setSubSnacks(false);
+    } else if (state.selectedTab === 2) {
+      setSubDrinks(true);
+      setSubSnacks(false);
+      if (drinksCats.length > 0) {
+        setSelectedType(drinksCats[0]._id);
+        setSelectedSubCategories(drinksCats);
+      }
+    } else if (state.selectedTab === 3) {
+      setSubSnacks(true);
+      setSubDrinks(false);
+      if (snacksCats.length > 0) {
+        setSelectedType(snacksCats[0]._id);
+        setSelectedSubCategories(snacksCats);
+      }
+    }
+  }, [snacksCats, drinksCats]);
 
   return (
     <>
@@ -200,12 +221,23 @@ const MobileHome = () => {
           Snacks
         </div>
       </div>
-      <div
-        className="pt-3 d-flex justify-content-around pb-5"
-        style={{ background: state.bgColor }}
-      >
-        <RenderdComponent />
-      </div>
+      {loading ? (
+        <div
+          className="col-md-12 d-flex align-items-center justify-content-center"
+          style={{ height: 300 }}
+        >
+          <div className="">
+            <ReactLoading type={"bars"} color={"#162e4d"} />
+          </div>
+        </div>
+      ) : (
+        <div
+          className="pt-3 d-flex justify-content-around pb-5"
+          style={{ background: state.bgColor }}
+        >
+          <RenderdComponent />
+        </div>
+      )}
     </>
   );
 };
